@@ -1,0 +1,878 @@
+{
+  "ru": {
+    "home": {
+      "eyebrow": "Рабочая область",
+      "title": "Главное меню",
+      "description": "Краткий обзор подготовки аккаунта к продаже билетов и услуг.",
+      "setupTitle": "Настройка продаж",
+      "setupDescription": "Заполните базовые данные по цепочке: контрагент, объект, услуги, мероприятие и сеансы.",
+      "progress": "Прогресс настройки",
+      "openOnboarding": "Открыть онбординг",
+      "cards": [
+        {
+          "label": "Контрагенты",
+          "value": "0",
+          "hint": "Юрлица и банковские реквизиты"
+        },
+        {
+          "label": "Объекты",
+          "value": "0",
+          "hint": "Площадки, витрины и контакты"
+        },
+        {
+          "label": "Продажи",
+          "value": "0 ₸",
+          "hint": "Статистика появится после запуска"
+        }
+      ]
+    },
+    "header": {
+      "dashboard": "Dashboard",
+      "search": "Поиск",
+      "notifications": "Уведомления",
+      "profile": "Профиль",
+      "language": "Язык",
+      "editProfile": "Редактировать профиль",
+      "languages": {
+        "kk": "ҚАЗ",
+        "ru": "РУС"
+      }
+    },
+    "profile": {
+      "title": "Профиль",
+      "description": "Обновите данные аккаунта и фотографию.",
+      "defaultFullName": "Пользователь KassaPay",
+      "defaultPosition": "Администратор",
+      "photo": "Фотография",
+      "uploadPhoto": "Загрузить фото",
+      "fullName": "ФИО",
+      "position": "Должность",
+      "phone": "Телефон",
+      "email": "Email",
+      "organization": "Организация",
+      "cancel": "Отмена",
+      "save": "Сохранить"
+    },
+    "sidebar": {
+      "search": "Поиск...",
+      "settings": "Настройки",
+      "logout": "Выйти",
+      "expand": "Развернуть меню",
+      "collapse": "Свернуть меню",
+      "nav": {
+        "dashboard": "Главное",
+        "directories": "Справочники",
+        "settings": "Настройки"
+      },
+      "content": {
+        "dashboard": {
+          "title": "Главное",
+          "sections": [
+            {
+              "title": "Запуск",
+              "items": [
+                {
+                  "icon": "dashboard",
+                  "label": "Обзор аккаунта",
+                  "href": "/dashboard"
+                },
+                {
+                  "icon": "check",
+                  "label": "Готовность к продажам"
+                }
+              ]
+            }
+          ]
+        },
+        "directories": {
+          "title": "Справочники",
+          "sections": [
+            {
+              "title": "Основные данные",
+              "items": [
+                {
+                  "icon": "invoice",
+                  "label": "Контрагенты",
+                  "href": "/dashboard/directories/contractors"
+                },
+                {
+                  "icon": "folderOpen",
+                  "label": "Объекты",
+                  "href": "/dashboard/directories/objects"
+                },
+                {
+                  "icon": "calendar",
+                  "label": "Мероприятия",
+                  "href": "/dashboard/directories/events"
+                },
+                {
+                  "icon": "filter",
+                  "label": "Категории услуг",
+                  "href": "/dashboard/directories/service-categories"
+                },
+                {
+                  "icon": "task",
+                  "label": "Услуги",
+                  "href": "/dashboard/directories/services"
+                },
+                {
+                  "icon": "time",
+                  "label": "Сеансы мероприятий",
+                  "href": "/dashboard/directories/sessions"
+                }
+              ]
+            }
+          ]
+        },
+        "settings": {
+          "title": "Настройки",
+          "sections": [
+            {
+              "title": "Аккаунт",
+              "items": [
+                {
+                  "icon": "user",
+                  "label": "Профиль"
+                },
+                {
+                  "icon": "security",
+                  "label": "Безопасность"
+                },
+                {
+                  "icon": "settings",
+                  "label": "Параметры"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "onboarding": {
+      "eyebrow": "Старт после покупки тарифа",
+      "title": "Настройте продажи от контрагента до сеансов",
+      "description": "Пройдите пять шагов по цепочке: контрагент → объект → услуги → мероприятие → сеанс. Данные связаны между шагами.",
+      "introEyebrow": "Добро пожаловать в KassaPay",
+      "introTitle": "Давайте запустим продажи вместе",
+      "introDescription": "Заполним только нужные поля: юридические данные, площадку, услуги, мероприятие и расписание.",
+      "introResumeEyebrow": "Настройка почти готова",
+      "introResumeTitle": "Осталось немного",
+      "introResumeDescription": "Вы уже начали настройку. Продолжим с того места, где остановились.",
+      "introStart": "Начать сейчас",
+      "introContinue": "Продолжить",
+      "introProgress": "Заполнено шагов",
+      "progress": "Готовность",
+      "step": "Шаг",
+      "of": "из",
+      "save": "Сохранить шаг",
+      "saveAndNext": "Сохранить и далее",
+      "next": "Далее",
+      "back": "Назад",
+      "completed": "Готово",
+      "notCompleted": "Нужно заполнить",
+      "draft": "Черновик",
+      "sidebarTitle": "Онбординг",
+      "sidebarHint": "Заполните основу перед запуском продаж",
+      "formTitle": "Заполните поля",
+      "formHint": "Поля со звёздочкой обязательны. Селекты подтягивают данные из предыдущих шагов.",
+      "source": "3D-визуал",
+      "selectPlaceholder": "Выберите значение",
+      "emptyLinkHint": "Сначала заполните и сохраните связанный шаг.",
+      "helpers": {
+        "contractors": "Контрагент — юрлицо для договоров, реквизитов и вывода средств.",
+        "object": "Объект — площадка продаж. Привязывается к контрагенту, который получает платежи.",
+        "services": "Услуги — то, что покупает клиент (билеты, экскурсии). Дальше они подключатся к мероприятию.",
+        "events": "Мероприятие объединяет объект и услуги. На его основе создаются сеансы.",
+        "sessions": "Сеанс — конкретное расписание мероприятия: даты, дни недели и время."
+      },
+      "options": {
+        "serviceFlags": [
+          "Учитывать в подсчете билетов",
+          "Отображать у экскурсовода",
+          "Многоразовый билет"
+        ],
+        "weekdays": [
+          "Пн",
+          "Вт",
+          "Ср",
+          "Чт",
+          "Пт",
+          "Сб",
+          "Вс"
+        ],
+        "salesTypes": [
+          "Kaspi",
+          "Сайт",
+          "Касса",
+          "Kassapay"
+        ]
+      },
+      "steps": [
+        {
+          "id": "contractors",
+          "title": "Контрагент",
+          "shortTitle": "Контрагент",
+          "description": "Юридическое лицо и банковские реквизиты для выплат.",
+          "image": "/Rocket.png",
+          "fields": [
+            {
+              "name": "contractorName",
+              "label": "Наименование",
+              "type": "text",
+              "required": true,
+              "placeholder": "ТОО Kassa Museum"
+            },
+            {
+              "name": "bin",
+              "label": "БИН",
+              "type": "text",
+              "required": true,
+              "placeholder": "123456789012"
+            },
+            {
+              "name": "bank",
+              "label": "Банк",
+              "type": "text",
+              "required": true,
+              "placeholder": "АО Kaspi Bank"
+            },
+            {
+              "name": "account",
+              "label": "Лицевой счет",
+              "type": "text",
+              "required": true,
+              "placeholder": "KZ000000000000000000"
+            },
+            {
+              "name": "bik",
+              "label": "БИК",
+              "type": "text",
+              "required": true,
+              "placeholder": "CASPKZKA"
+            },
+            {
+              "name": "legalAddress",
+              "label": "Юр. адрес",
+              "type": "text",
+              "placeholder": "г. Алматы, пр. Абая, 10"
+            }
+          ]
+        },
+        {
+          "id": "object",
+          "title": "Объект",
+          "shortTitle": "Объект",
+          "description": "Площадка или витрина, где проходят продажи.",
+          "image": "/Kozha Ahmet.png",
+          "fields": [
+            {
+              "name": "objectName",
+              "label": "Наименование",
+              "type": "text",
+              "required": true,
+              "placeholder": "Главный музей"
+            },
+            {
+              "name": "contractor",
+              "label": "Контрагент",
+              "type": "select",
+              "required": true,
+              "optionsFrom": "contractor",
+              "emptyHint": "Сначала сохраните шаг «Контрагент»."
+            },
+            {
+              "name": "address",
+              "label": "Адрес",
+              "type": "text",
+              "required": true,
+              "placeholder": "г. Алматы, пр. Абая, 10"
+            },
+            {
+              "name": "phone",
+              "label": "Телефон",
+              "type": "tel",
+              "placeholder": "+7 700 000 00 00"
+            },
+            {
+              "name": "email",
+              "label": "Email",
+              "type": "email",
+              "placeholder": "info@museum.kz"
+            }
+          ]
+        },
+        {
+          "id": "services",
+          "title": "Услуги",
+          "shortTitle": "Услуги",
+          "description": "Что продаём клиенту: билеты, экскурсии и каналы продаж.",
+          "image": "/services.png",
+          "fields": [
+            {
+              "name": "serviceName",
+              "label": "Наименование",
+              "type": "text",
+              "required": true,
+              "placeholder": "Взрослый билет"
+            },
+            {
+              "name": "salesTypes",
+              "label": "Каналы продаж",
+              "type": "checkboxGroup",
+              "required": true,
+              "optionsKey": "salesTypes"
+            },
+            {
+              "name": "serviceFlags",
+              "label": "Параметры",
+              "type": "checkboxGroup",
+              "optionsKey": "serviceFlags"
+            }
+          ]
+        },
+        {
+          "id": "events",
+          "title": "Мероприятие",
+          "shortTitle": "Мероприятие",
+          "description": "Свяжите объект и услуги в шаблон мероприятия.",
+          "image": "/events.png",
+          "fields": [
+            {
+              "name": "eventName",
+              "label": "Наименование",
+              "type": "text",
+              "required": true,
+              "placeholder": "Экскурсия по музею"
+            },
+            {
+              "name": "eventObject",
+              "label": "Объект",
+              "type": "select",
+              "required": true,
+              "optionsFrom": "object",
+              "emptyHint": "Сначала сохраните шаг «Объект»."
+            },
+            {
+              "name": "eventServices",
+              "label": "Услуги",
+              "type": "checkboxGroup",
+              "required": true,
+              "optionsFrom": "service",
+              "emptyHint": "Сначала сохраните шаг «Услуги»."
+            },
+            {
+              "name": "eventDescription",
+              "label": "Описание",
+              "type": "textarea",
+              "placeholder": "Кратко опишите мероприятие"
+            }
+          ]
+        },
+        {
+          "id": "sessions",
+          "title": "Сеанс",
+          "shortTitle": "Сеанс",
+          "description": "Расписание, лимиты и время продаж для мероприятия.",
+          "image": "/events.png",
+          "fields": [
+            {
+              "name": "sessionName",
+              "label": "Наименование",
+              "type": "text",
+              "required": true,
+              "placeholder": "Утренний сеанс"
+            },
+            {
+              "name": "eventTemplate",
+              "label": "Мероприятие",
+              "type": "select",
+              "required": true,
+              "optionsFrom": "event",
+              "emptyHint": "Сначала сохраните шаг «Мероприятие»."
+            },
+            {
+              "name": "startDate",
+              "label": "Дата начала",
+              "type": "date",
+              "required": true
+            },
+            {
+              "name": "endDate",
+              "label": "Дата окончания",
+              "type": "date",
+              "required": true
+            },
+            {
+              "name": "ticketLimit",
+              "label": "Лимит билетов",
+              "type": "number",
+              "placeholder": "100"
+            },
+            {
+              "name": "weekdays",
+              "label": "Дни недели",
+              "type": "checkboxGroup",
+              "optionsKey": "weekdays"
+            },
+            {
+              "name": "times",
+              "label": "Время",
+              "type": "timeList"
+            }
+          ]
+        }
+      ],
+      "multiSelectPlaceholder": "Выберите варианты",
+      "clearSelection": "Сбросить",
+      "introDoneEyebrow": "Настройка завершена",
+      "introDoneTitle": "Система готова к работе",
+      "introDoneDescription": "Все шаги заполнены. Можно вернуться к обзору или открыть онбординг снова, чтобы проверить данные.",
+      "introReview": "Просмотреть шаги",
+      "addTime": "Добавить",
+      "timePlaceholder": "Выберите время",
+      "timeQuick": "Быстрый выбор",
+      "timeHour": "Час",
+      "timeMinute": "Мин",
+      "timeAlreadyAdded": "Уже добавлено",
+      "removeTime": "Удалить время"
+    }
+  },
+  "kk": {
+    "home": {
+      "eyebrow": "Жұмыс аймағы",
+      "title": "Басты мәзір",
+      "description": "Аккаунтты билет пен қызмет сатуға дайындаудың қысқаша көрінісі.",
+      "setupTitle": "Сатылымды баптау",
+      "setupDescription": "Негізгі деректерді тізбек бойынша толтырыңыз: контрагент, объект, қызметтер, іс-шара және сеанстар.",
+      "progress": "Баптау барысы",
+      "openOnboarding": "Онбордингті ашу",
+      "cards": [
+        {
+          "label": "Контрагенттер",
+          "value": "0",
+          "hint": "Заңды тұлғалар және банк деректемелері"
+        },
+        {
+          "label": "Объектілер",
+          "value": "0",
+          "hint": "Алаңдар, витриналар және байланыстар"
+        },
+        {
+          "label": "Сатылым",
+          "value": "0 ₸",
+          "hint": "Статистика іске қосылғаннан кейін шығады"
+        }
+      ]
+    },
+    "header": {
+      "dashboard": "Dashboard",
+      "search": "Іздеу",
+      "notifications": "Хабарламалар",
+      "profile": "Профиль",
+      "language": "Тіл",
+      "editProfile": "Профильді өңдеу",
+      "languages": {
+        "kk": "ҚАЗ",
+        "ru": "РУС"
+      }
+    },
+    "profile": {
+      "title": "Профиль",
+      "description": "Аккаунт деректерін және фотосуретті жаңартыңыз.",
+      "defaultFullName": "KassaPay пайдаланушысы",
+      "defaultPosition": "Әкімші",
+      "photo": "Фотосурет",
+      "uploadPhoto": "Фото жүктеу",
+      "fullName": "Аты-жөні",
+      "position": "Лауазымы",
+      "phone": "Телефон",
+      "email": "Email",
+      "organization": "Ұйым",
+      "cancel": "Бас тарту",
+      "save": "Сақтау"
+    },
+    "sidebar": {
+      "search": "Іздеу...",
+      "settings": "Баптаулар",
+      "logout": "Шығу",
+      "expand": "Мәзірді ашу",
+      "collapse": "Мәзірді жабу",
+      "nav": {
+        "dashboard": "Басты",
+        "directories": "Анықтамалықтар",
+        "settings": "Баптаулар"
+      },
+      "content": {
+        "dashboard": {
+          "title": "Басты",
+          "sections": [
+            {
+              "title": "Іске қосу",
+              "items": [
+                {
+                  "icon": "dashboard",
+                  "label": "Аккаунт шолуы",
+                  "href": "/dashboard"
+                },
+                {
+                  "icon": "check",
+                  "label": "Сатылымға дайындық"
+                }
+              ]
+            }
+          ]
+        },
+        "directories": {
+          "title": "Анықтамалықтар",
+          "sections": [
+            {
+              "title": "Негізгі деректер",
+              "items": [
+                {
+                  "icon": "invoice",
+                  "label": "Контрагенттер",
+                  "href": "/dashboard/directories/contractors"
+                },
+                {
+                  "icon": "folderOpen",
+                  "label": "Объектілер",
+                  "href": "/dashboard/directories/objects"
+                },
+                {
+                  "icon": "calendar",
+                  "label": "Іс-шаралар",
+                  "href": "/dashboard/directories/events"
+                },
+                {
+                  "icon": "filter",
+                  "label": "Қызмет категориялары",
+                  "href": "/dashboard/directories/service-categories"
+                },
+                {
+                  "icon": "task",
+                  "label": "Қызметтер",
+                  "href": "/dashboard/directories/services"
+                },
+                {
+                  "icon": "time",
+                  "label": "Іс-шара сеанстары",
+                  "href": "/dashboard/directories/sessions"
+                }
+              ]
+            }
+          ]
+        },
+        "settings": {
+          "title": "Баптаулар",
+          "sections": [
+            {
+              "title": "Аккаунт",
+              "items": [
+                {
+                  "icon": "user",
+                  "label": "Профиль"
+                },
+                {
+                  "icon": "security",
+                  "label": "Қауіпсіздік"
+                },
+                {
+                  "icon": "settings",
+                  "label": "Параметрлер"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "onboarding": {
+      "eyebrow": "Тариф сатып алғаннан кейінгі старт",
+      "title": "Сатылымды контрагенттен сеансқа дейін баптаңыз",
+      "description": "Бес қадам: контрагент → объект → қызметтер → іс-шара → сеанс. Деректер қадамдар арасында байланысады.",
+      "introEyebrow": "KassaPay-ге қош келдіңіз",
+      "introTitle": "Сатылымды бірге іске қосайық",
+      "introDescription": "Тек қажетті өрістерді толтырамыз: заңды деректер, алаң, қызметтер, іс-шара және кесте.",
+      "introResumeEyebrow": "Баптау аяқталуға жақын",
+      "introResumeTitle": "Аз ғана қалды",
+      "introResumeDescription": "Сіз баптауды бастап қойдыңыз. Тоқтаған жерден жалғастырайық.",
+      "introStart": "Қазір бастау",
+      "introContinue": "Жалғастыру",
+      "introProgress": "Толтырылған қадамдар",
+      "progress": "Дайындық",
+      "step": "Қадам",
+      "of": "ішінен",
+      "save": "Қадамды сақтау",
+      "saveAndNext": "Сақтап, жалғастыру",
+      "next": "Келесі",
+      "back": "Артқа",
+      "completed": "Дайын",
+      "notCompleted": "Толтыру керек",
+      "draft": "Черновик",
+      "sidebarTitle": "Онбординг",
+      "sidebarHint": "Сатылым алдында негізгі деректерді толтырыңыз",
+      "formTitle": "Өрістерді толтырыңыз",
+      "formHint": "Жұлдызшалы өрістер міндетті. Селектер алдыңғы қадамдардан дерек алады.",
+      "source": "3D-визуал",
+      "selectPlaceholder": "Мәнді таңдаңыз",
+      "emptyLinkHint": "Алдымен байланысты қадамды толтырып сақтаңыз.",
+      "helpers": {
+        "contractors": "Контрагент — келісімшарт, реквизит және төлем шығару үшін заңды тұлға.",
+        "object": "Объект — сату алаңы. Төлем алатын контрагентке байланады.",
+        "services": "Қызметтер — клиент сатып алатын нәрсе. Кейін іс-шараға қосылады.",
+        "events": "Іс-шара объект пен қызметтерді біріктіреді. Сеанстар соның негізінде жасалады.",
+        "sessions": "Сеанс — іс-шараның нақты кестесі: күндер, апта күндері және уақыт."
+      },
+      "options": {
+        "serviceFlags": [
+          "Билет санын есепке алу",
+          "Экскурсоводта көрсету",
+          "Көп реттік билет"
+        ],
+        "weekdays": [
+          "Дс",
+          "Сс",
+          "Ср",
+          "Бс",
+          "Жм",
+          "Сб",
+          "Жс"
+        ],
+        "salesTypes": [
+          "Kaspi",
+          "Сайт",
+          "Касса",
+          "Kassapay"
+        ]
+      },
+      "steps": [
+        {
+          "id": "contractors",
+          "title": "Контрагент",
+          "shortTitle": "Контрагент",
+          "description": "Заңды тұлға және банк реквизиттері.",
+          "image": "/Rocket.png",
+          "fields": [
+            {
+              "name": "contractorName",
+              "label": "Атауы",
+              "type": "text",
+              "required": true,
+              "placeholder": "ТОО Kassa Museum"
+            },
+            {
+              "name": "bin",
+              "label": "БИН",
+              "type": "text",
+              "required": true,
+              "placeholder": "123456789012"
+            },
+            {
+              "name": "bank",
+              "label": "Банк",
+              "type": "text",
+              "required": true,
+              "placeholder": "АО Kaspi Bank"
+            },
+            {
+              "name": "account",
+              "label": "Жеке шот",
+              "type": "text",
+              "required": true,
+              "placeholder": "KZ000000000000000000"
+            },
+            {
+              "name": "bik",
+              "label": "БИК",
+              "type": "text",
+              "required": true,
+              "placeholder": "CASPKZKA"
+            },
+            {
+              "name": "legalAddress",
+              "label": "Заңды мекенжай",
+              "type": "text",
+              "placeholder": "Алматы қ., Абай даңғ., 10"
+            }
+          ]
+        },
+        {
+          "id": "object",
+          "title": "Объект",
+          "shortTitle": "Объект",
+          "description": "Сату өтетін алаң немесе витрина.",
+          "image": "/Kozha Ahmet.png",
+          "fields": [
+            {
+              "name": "objectName",
+              "label": "Атауы",
+              "type": "text",
+              "required": true,
+              "placeholder": "Басты музей"
+            },
+            {
+              "name": "contractor",
+              "label": "Контрагент",
+              "type": "select",
+              "required": true,
+              "optionsFrom": "contractor",
+              "emptyHint": "Алдымен «Контрагент» қадамын сақтаңыз."
+            },
+            {
+              "name": "address",
+              "label": "Мекенжай",
+              "type": "text",
+              "required": true,
+              "placeholder": "Алматы қ., Абай даңғ., 10"
+            },
+            {
+              "name": "phone",
+              "label": "Телефон",
+              "type": "tel",
+              "placeholder": "+7 700 000 00 00"
+            },
+            {
+              "name": "email",
+              "label": "Email",
+              "type": "email",
+              "placeholder": "info@museum.kz"
+            }
+          ]
+        },
+        {
+          "id": "services",
+          "title": "Қызметтер",
+          "shortTitle": "Қызметтер",
+          "description": "Клиентке сатылатын билеттер, экскурсиялар және сату арналары.",
+          "image": "/services.png",
+          "fields": [
+            {
+              "name": "serviceName",
+              "label": "Атауы",
+              "type": "text",
+              "required": true,
+              "placeholder": "Ересек билет"
+            },
+            {
+              "name": "salesTypes",
+              "label": "Сату арналары",
+              "type": "checkboxGroup",
+              "required": true,
+              "optionsKey": "salesTypes"
+            },
+            {
+              "name": "serviceFlags",
+              "label": "Параметрлер",
+              "type": "checkboxGroup",
+              "optionsKey": "serviceFlags"
+            }
+          ]
+        },
+        {
+          "id": "events",
+          "title": "Іс-шара",
+          "shortTitle": "Іс-шара",
+          "description": "Объект пен қызметтерді іс-шара шаблонына байлаңыз.",
+          "image": "/events.png",
+          "fields": [
+            {
+              "name": "eventName",
+              "label": "Атауы",
+              "type": "text",
+              "required": true,
+              "placeholder": "Музей экскурсиясы"
+            },
+            {
+              "name": "eventObject",
+              "label": "Объект",
+              "type": "select",
+              "required": true,
+              "optionsFrom": "object",
+              "emptyHint": "Алдымен «Объект» қадамын сақтаңыз."
+            },
+            {
+              "name": "eventServices",
+              "label": "Қызметтер",
+              "type": "checkboxGroup",
+              "required": true,
+              "optionsFrom": "service",
+              "emptyHint": "Алдымен «Қызметтер» қадамын сақтаңыз."
+            },
+            {
+              "name": "eventDescription",
+              "label": "Сипаттама",
+              "type": "textarea",
+              "placeholder": "Іс-шараны қысқаша сипаттаңыз"
+            }
+          ]
+        },
+        {
+          "id": "sessions",
+          "title": "Сеанс",
+          "shortTitle": "Сеанс",
+          "description": "Іс-шараның кестесі, лимиті және уақыты.",
+          "image": "/events.png",
+          "fields": [
+            {
+              "name": "sessionName",
+              "label": "Атауы",
+              "type": "text",
+              "required": true,
+              "placeholder": "Таңғы сеанс"
+            },
+            {
+              "name": "eventTemplate",
+              "label": "Іс-шара",
+              "type": "select",
+              "required": true,
+              "optionsFrom": "event",
+              "emptyHint": "Алдымен «Іс-шара» қадамын сақтаңыз."
+            },
+            {
+              "name": "startDate",
+              "label": "Басталу күні",
+              "type": "date",
+              "required": true
+            },
+            {
+              "name": "endDate",
+              "label": "Аяқталу күні",
+              "type": "date",
+              "required": true
+            },
+            {
+              "name": "ticketLimit",
+              "label": "Билет лимиті",
+              "type": "number",
+              "placeholder": "100"
+            },
+            {
+              "name": "weekdays",
+              "label": "Апта күндері",
+              "type": "checkboxGroup",
+              "optionsKey": "weekdays"
+            },
+            {
+              "name": "times",
+              "label": "Уақыт",
+              "type": "timeList"
+            }
+          ]
+        }
+      ],
+      "multiSelectPlaceholder": "Нұсқаларды таңдаңыз",
+      "clearSelection": "Тазалау",
+      "introDoneEyebrow": "Баптау аяқталды",
+      "introDoneTitle": "Жүйе жұмысқа дайын",
+      "introDoneDescription": "Барлық қадамдар толтырылды. Шолуға оралуға немесе деректерді тексеру үшін онбордингті қайта ашуға болады.",
+      "introReview": "Қадамдарды қарау",
+      "addTime": "Қосу",
+      "timePlaceholder": "Уақытты таңдаңыз",
+      "timeQuick": "Жылдам таңдау",
+      "timeHour": "Сағ",
+      "timeMinute": "Мин",
+      "timeAlreadyAdded": "Қосылған",
+      "removeTime": "Уақытты жою"
+    }
+  }
+}
