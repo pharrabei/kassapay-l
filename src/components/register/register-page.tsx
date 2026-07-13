@@ -98,26 +98,35 @@ const RegisterHeroPanel = memo(function RegisterHeroPanel() {
         </div>
 
         <div className="relative flex flex-1 items-center justify-center">
-          <div className="absolute h-64 w-64 animate-pulse rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl" />
-          <div className="absolute h-44 w-44 rounded-full border border-white/10 bg-white/10 backdrop-blur-2xl" />
-          <div className="absolute h-24 w-24 rounded-full bg-emerald-400/20 blur-xl" />
+          <div className="absolute h-72 w-72 rounded-full border border-white/10 bg-white/5" />
+          <div className="absolute h-52 w-52 rounded-full border border-white/10 bg-white/10" />
+          <div className="absolute h-28 w-28 rounded-full bg-emerald-400/20 blur-xl" />
+
+          <Image
+            src={withBasePath("/maininf.png")}
+            alt=""
+            width={480}
+            height={480}
+            className="relative z-10 h-auto w-[min(100%,300px)] object-contain drop-shadow-2xl"
+            priority
+          />
 
           <HeroStatCard
             title="QR-оплата"
             text="Kaspi QR и карты без лишних шагов."
-            className="absolute top-[18%] left-0"
+            className="absolute top-[12%] left-0 z-20"
           />
 
           <HeroStatCard
             title="PDF-счета"
             text="Счета для юридических лиц и быстрых оплат."
-            className="absolute top-[38%] right-0"
+            className="absolute top-[36%] right-0 z-20"
           />
 
           <HeroStatCard
             title="Аналитика"
             text="Продажи, сотрудники и объекты в понятных отчетах."
-            className="absolute bottom-[16%] left-[15%]"
+            className="absolute bottom-[12%] left-[12%] z-20"
           />
         </div>
 

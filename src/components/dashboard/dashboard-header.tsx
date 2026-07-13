@@ -11,7 +11,11 @@ import {
   UserIcon,
 } from "@hugeicons/core-free-icons"
 import { getDashboardCopy, type DirectoryKind } from "@/lib/dashboard-i18n"
-import { getDashboardPath, getLocalePrefix } from "@/lib/routing"
+import {
+  getDashboardPath,
+  getLocalePrefix,
+  normalizeAppPath,
+} from "@/lib/routing"
 import { useLanguageStore, type AppLanguage } from "@/store/language-store"
 import { useProfileStore } from "@/store/profile-store"
 import { ProfileDialog } from "@/components/dashboard/profile-dialog"
@@ -25,7 +29,9 @@ const directoryPathPattern =
   /^\/dashboard\/directories\/(contractors|objects|events|service-categories|services|sessions)$/
 
 function stripLocalePrefix(pathname: string) {
-  return pathname.replace(/^\/(ru|kk|en)(?=\/|$)/, "") || "/"
+  return normalizeAppPath(
+    pathname.replace(/^\/(ru|kk|en)(?=\/|$)/, "") || "/"
+  )
 }
 
 function withLocalePrefix(path: string, locale: string | null) {

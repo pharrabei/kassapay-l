@@ -1219,19 +1219,30 @@ export function DashboardHome() {
   )
 
   React.useEffect(() => {
+    let cancelled = false
+    const finish = () => {
+      if (!cancelled) setHasHydrated(true)
+    }
+
     const check = () => {
       if (
         useOnboardingStore.persist.hasHydrated() &&
         useRegisterStore.persist.hasHydrated()
       ) {
-        setHasHydrated(true)
+        finish()
       }
     }
+
     check()
     const unsubOnboarding =
       useOnboardingStore.persist.onFinishHydration(check)
     const unsubRegister = useRegisterStore.persist.onFinishHydration(check)
+    // Fallback: never leave the overview stuck on skeleton (static hosting quirks).
+    const timeout = window.setTimeout(finish, 400)
+
     return () => {
+      cancelled = true
+      window.clearTimeout(timeout)
       unsubOnboarding?.()
       unsubRegister?.()
     }

@@ -1,7 +1,7 @@
 "use client"
 
 import { type ReactNode, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { useRegisterStore } from "@/store/register-store"
 
 import { Button } from "@/components/ui/button"
@@ -21,6 +21,8 @@ import {
   isOnboardingComplete,
   useOnboardingStore,
 } from "@/store/onboarding-store"
+import { withBasePath } from "@/lib/base-path"
+import { navigateHard } from "@/lib/routing"
 import { toast } from "@/store/toast-store"
 
 const FieldShell = ({ children }: { children: ReactNode }) => (
@@ -220,7 +222,7 @@ export function AuthPage() {
         variant: "success",
       })
       setStep(4)
-      router.push("/")
+      navigateHard("/")
       return
     }
 
@@ -231,7 +233,7 @@ export function AuthPage() {
         variant: "info",
       })
       setStep(data.tariff ? 5 : 4)
-      router.push("/")
+      navigateHard("/")
       return
     }
 
@@ -251,7 +253,7 @@ export function AuthPage() {
       variant: "success",
     })
     setStep(0)
-    router.push("/dashboard")
+    navigateHard("/dashboard")
   }
 
   return (
@@ -564,26 +566,35 @@ export function AuthPage() {
             </div>
 
             <div className="relative flex flex-1 items-center justify-center">
-              <div className="absolute h-64 w-64 animate-pulse rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl" />
-              <div className="absolute h-44 w-44 rounded-full border border-white/10 bg-white/10 backdrop-blur-2xl" />
-              <div className="absolute h-24 w-24 rounded-full bg-emerald-400/20 blur-xl" />
+              <div className="absolute h-72 w-72 rounded-full border border-white/10 bg-white/5 blur-0" />
+              <div className="absolute h-52 w-52 rounded-full border border-white/10 bg-white/10" />
+              <div className="absolute h-28 w-28 rounded-full bg-emerald-400/20 blur-xl" />
+
+              <Image
+                src={withBasePath("/maininf.png")}
+                alt=""
+                width={480}
+                height={480}
+                className="relative z-10 h-auto w-[min(100%,300px)] object-contain drop-shadow-2xl"
+                priority
+              />
 
               <HeroStatCard
                 title="QR-платежи"
                 text="Быстрый и простой процесс оплаты."
-                className="absolute top-[18%] left-0"
+                className="absolute top-[12%] left-0 z-20"
               />
 
               <HeroStatCard
                 title="PDF-счета"
                 text="Генерируйте документы мгновенно."
-                className="absolute top-[38%] right-0"
+                className="absolute top-[36%] right-0 z-20"
               />
 
               <HeroStatCard
                 title="Продажи"
                 text="Отслеживайте продажи и активность партнеров."
-                className="absolute bottom-[16%] left-[15%]"
+                className="absolute bottom-[12%] left-[12%] z-20"
               />
             </div>
 

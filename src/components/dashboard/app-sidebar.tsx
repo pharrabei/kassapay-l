@@ -30,12 +30,12 @@ import {
   type DashboardMenuSectionCopy,
   type SidebarSectionId,
 } from "@/lib/dashboard-i18n"
+import { withBasePath } from "@/lib/base-path"
+import { normalizeAppPath } from "@/lib/routing"
 import { cn } from "@/lib/utils"
 import { useLanguageStore } from "@/store/language-store"
 
 const softSpringEasing = "cubic-bezier(0.25, 1.1, 0.4, 1)"
-import { withBasePath } from "@/lib/base-path"
-
 const logoSrc = withBasePath("/Logo.svg?v=2")
 
 const iconMap = {
@@ -56,14 +56,18 @@ const iconMap = {
 } satisfies Record<DashboardIconKey, typeof DashboardSquare01Icon>
 
 function stripLocalePrefix(pathname: string) {
-  return pathname.replace(/^\/(ru|kk|en)(?=\/|$)/, "") || "/"
+  return normalizeAppPath(
+    pathname.replace(/^\/(ru|kk|en)(?=\/|$)/, "") || "/"
+  )
 }
 
 /** Exact match for /dashboard so nested routes do not light up "Обзор аккаунта". */
 function isMenuHrefActive(pathname: string, href?: string) {
   if (!href) return false
-  if (href === "/dashboard") return pathname === "/dashboard"
-  return pathname === href || pathname.startsWith(`${href}/`)
+  const path = stripLocalePrefix(pathname)
+  const target = normalizeAppPath(href)
+  if (target === "/dashboard") return path === "/dashboard"
+  return path === target || path.startsWith(`${target}/`)
 }
 
 function Icon({
@@ -579,7 +583,7 @@ function DetailSidebar({
 }
 
 function getRouteSection(pathname: string): SidebarSectionId {
-  return pathname.startsWith("/dashboard/directories")
+  return stripLocalePrefix(pathname).startsWith("/dashboard/directories")
     ? "directories"
     : "dashboard"
 }

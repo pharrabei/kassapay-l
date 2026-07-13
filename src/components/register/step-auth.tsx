@@ -1,9 +1,9 @@
 "use client"
 
 import React, { type ReactNode, useEffect, useMemo, useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useRegisterStore } from "@/store/register-store"
-import { getDashboardPath } from "@/lib/routing"
+import { getDashboardPath, navigateHard } from "@/lib/routing"
 import {
   getFirstIncompleteStep,
   seedOnboardingFromRegister,
@@ -90,7 +90,6 @@ export function StepAuth() {
     setStep,
     resetRegisterStore,
   } = useRegisterStore()
-  const router = useRouter()
   const pathname = usePathname()
 
   const isRegister = authMode === "register"
@@ -265,7 +264,8 @@ export function StepAuth() {
         : "Завершите онбординг, чтобы запустить продажи.",
       variant: "success",
     })
-    router.push(getDashboardPath(pathname))
+    // Full page load — static export on GitHub Pages is flaky with soft nav.
+    navigateHard(getDashboardPath(pathname))
   }
 
   return (
