@@ -99,7 +99,6 @@ function formatPhone(value: string) {
 }
 
 export function AuthPage() {
-  const router = useRouter()
   const { data, updateData, setStep, resetRegisterStore } = useRegisterStore()
 
   const [isRegister, setIsRegister] = useState(false)
