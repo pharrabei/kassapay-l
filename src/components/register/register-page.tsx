@@ -49,12 +49,31 @@ const PAGE_META: Record<RegisterStep, { title: string; description: string }> =
     },
   }
 
+const HeroStatCard = memo(function HeroStatCard({
+  title,
+  text,
+  className = "",
+}: {
+  title: string
+  text: string
+  className?: string
+}) {
+  return (
+    <div
+      className={`w-[min(100%,11.5rem)] rounded-2xl border border-white/10 bg-white/10 p-3.5 text-left text-white shadow-2xl shadow-black/10 backdrop-blur-xl transition-transform duration-500 hover:-translate-y-0.5 lg:w-52 lg:rounded-3xl lg:p-4 ${className}`}
+    >
+      <p className="text-sm font-medium">{title}</p>
+      <p className="mt-1 text-xs leading-5 text-white/70">{text}</p>
+    </div>
+  )
+})
+
 const RegisterHeroPanel = memo(function RegisterHeroPanel() {
   return (
     <section className="relative hidden min-h-0 p-4 md:block">
       <div className="absolute inset-4 overflow-hidden rounded-3xl bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.45),transparent_30%),radial-gradient(circle_at_85%_25%,rgba(14,165,233,0.28),transparent_32%),radial-gradient(circle_at_50%_90%,rgba(245,158,11,0.18),transparent_36%),linear-gradient(135deg,#0b1117_0%,#12352b_48%,#071a14_100%)]" />
 
-      <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-8 overflow-hidden rounded-3xl px-6 py-8 text-center text-white sm:px-8 lg:px-10">
+      <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 overflow-hidden rounded-3xl px-5 py-7 text-center text-white sm:gap-8 sm:px-8 lg:px-10">
         <div className="flex w-full max-w-lg flex-col items-center gap-4 animate-in duration-500 fade-in slide-in-from-top-3">
           <div className="inline-flex h-12 items-center rounded-2xl border border-white/10 bg-white/10 px-4 backdrop-blur-xl">
             <Image
@@ -72,9 +91,9 @@ const RegisterHeroPanel = memo(function RegisterHeroPanel() {
           </h2>
         </div>
 
-        <div className="relative flex min-h-0 w-full max-w-md flex-1 items-center justify-center">
-          <div className="absolute size-[min(70%,18rem)] rounded-full border border-white/10 bg-white/5" />
-          <div className="absolute size-[min(50%,12rem)] rounded-full border border-white/10 bg-white/10" />
+        <div className="relative mx-auto flex min-h-0 w-full max-w-xl flex-1 items-center justify-center px-2">
+          <div className="absolute size-[min(58%,16rem)] rounded-full border border-white/10 bg-white/5" />
+          <div className="absolute size-[min(42%,11rem)] rounded-full border border-white/10 bg-white/10" />
           <div className="absolute size-24 rounded-full bg-emerald-400/20 blur-xl" />
 
           <Image
@@ -82,8 +101,26 @@ const RegisterHeroPanel = memo(function RegisterHeroPanel() {
             alt=""
             width={480}
             height={480}
-            className="relative z-10 mx-auto h-auto max-h-[min(48dvh,360px)] w-auto max-w-full object-contain drop-shadow-2xl"
+            className="relative z-10 mx-auto h-auto max-h-[min(42dvh,320px)] w-auto max-w-[min(100%,280px)] object-contain drop-shadow-2xl"
             priority
+          />
+
+          <HeroStatCard
+            title="QR-оплата"
+            text="Kaspi QR и карты без лишних шагов."
+            className="absolute top-[6%] left-0 z-20 sm:top-[10%]"
+          />
+
+          <HeroStatCard
+            title="PDF-счета"
+            text="Счета для юридических лиц и быстрых оплат."
+            className="absolute top-[34%] right-0 z-20 sm:top-[38%]"
+          />
+
+          <HeroStatCard
+            title="Аналитика"
+            text="Продажи, сотрудники и объекты в понятных отчетах."
+            className="absolute bottom-[4%] left-[4%] z-20 sm:bottom-[8%] sm:left-[8%]"
           />
         </div>
       </div>
