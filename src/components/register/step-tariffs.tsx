@@ -12,6 +12,7 @@ import {
 } from "@/store/register-store"
 import { Button } from "@/components/ui/button"
 import { LoadingBlock } from "@/components/ui/loading-block"
+import { withBasePath } from "@/lib/base-path"
 
 interface TariffOption {
   id: TariffPlan
@@ -211,7 +212,7 @@ export function StepTariffs() {
                 {plan.id === "BUSINESS" && (
                   <div className="pointer-events-none absolute -top-20 left-1/2 z-20 hidden h-36 w-52 -translate-x-1/2 items-center justify-center md:flex">
                     <Image
-                      src="/3D.png"
+                      src={withBasePath("/3D.png")}
                       alt=""
                       width={320}
                       height={220}

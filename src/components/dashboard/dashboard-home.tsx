@@ -37,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { withBasePath } from "@/lib/base-path"
 import { getDashboardCopy } from "@/lib/dashboard-i18n"
 import { cn } from "@/lib/utils"
 import type {
@@ -1104,7 +1105,7 @@ function OnboardingDialog({
             <div className="relative mx-auto hidden h-[280px] w-full max-w-[280px] lg:block">
               <div className="absolute inset-x-6 top-10 h-32 rounded-full bg-primary/10 blur-3xl" />
               <Image
-                src="/Rocket.png"
+                src={withBasePath("/Rocket.png")}
                 alt=""
                 width={420}
                 height={420}

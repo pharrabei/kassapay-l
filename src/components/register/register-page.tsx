@@ -2,8 +2,9 @@
 
 import React, { memo } from "react"
 import Image from "next/image"
-import { useRegisterStore, type RegisterStep } from "@/store/register-store"
 import { LoadingBlock } from "@/components/ui/loading-block"
+import { withBasePath } from "@/lib/base-path"
+import { useRegisterStore, type RegisterStep } from "@/store/register-store"
 import { StepAuth } from "./step-auth"
 
 const StepTariffs = React.lazy(() =>
@@ -76,7 +77,7 @@ const RegisterHeroPanel = memo(function RegisterHeroPanel() {
         <div className="animate-in space-y-4 duration-500 fade-in slide-in-from-top-3">
           <div className="inline-flex h-14 items-center rounded-2xl border border-white/10 bg-white/10 px-4 backdrop-blur-xl">
             <Image
-              src="/Logo.svg"
+              src={withBasePath("/Logo.svg")}
               alt="KassaPay"
               width={150}
               height={34}

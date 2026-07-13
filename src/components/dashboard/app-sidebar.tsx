@@ -34,7 +34,9 @@ import { cn } from "@/lib/utils"
 import { useLanguageStore } from "@/store/language-store"
 
 const softSpringEasing = "cubic-bezier(0.25, 1.1, 0.4, 1)"
-const logoSrc = "/Logo.svg?v=2"
+import { withBasePath } from "@/lib/base-path"
+
+const logoSrc = withBasePath("/Logo.svg?v=2")
 
 const iconMap = {
   dashboard: DashboardSquare01Icon,
