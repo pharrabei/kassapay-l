@@ -1,21 +1,43 @@
-# Next.js template
+# KassaPay
 
-This is a Next.js template with shadcn/ui.
+Веб-приложение KassaPay: регистрация, оплата тарифа, дашборд, онбординг и справочники.
 
-## Adding components
+## Стек
 
-To add components to your app, run the following command:
+- Next.js (App Router)
+- React 19
+- Tailwind CSS + shadcn/ui
+- Zustand (persist)
+
+## Локальный запуск
 
 ```bash
-npx shadcn@latest add button
+npm install
+npm run dev
 ```
 
-This will place the ui components in the `components` directory.
+Откройте [http://localhost:3000](http://localhost:3000).
 
-## Using components
+## Сборка
 
-To use the components in your app, import them as follows:
+```bash
+# обычная static export
+npm run build
 
-```tsx
-import { Button } from "@/components/ui/button";
+# сборка под GitHub Pages (basePath /kassapay-l)
+GITHUB_PAGES=true npm run build
 ```
+
+Статика попадает в папку `out/`.
+
+## GitHub Pages
+
+Сайт: **https://pharrabei.github.io/kassapay-l/**
+
+Деплой идёт через GitHub Actions (`.github/workflows/deploy-pages.yml`) при push в `main`.
+
+## Основные разделы
+
+- `/` — вход / регистрация
+- `/dashboard` — обзор и онбординг
+- `/dashboard/directories/*` — справочники (CRUD)
