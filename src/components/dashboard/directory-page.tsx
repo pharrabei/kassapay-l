@@ -264,7 +264,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
       <div className="w-full animate-in px-4 py-6 duration-300 fade-in sm:px-5 lg:px-6 2xl:px-8">
         <section className="overflow-hidden rounded-xl border border-border bg-card">
           <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center sm:justify-between">
-            <label className="relative flex h-10 min-w-0 flex-1 items-center">
+            <label className="relative flex h-10 w-full max-w-xs shrink-0 items-center sm:max-w-[16rem]">
               <HugeiconsIcon
                 icon={Search01Icon}
                 size={16}
@@ -272,14 +272,14 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                 className="pointer-events-none absolute left-3 text-muted-foreground"
               />
               <Input
-                type="search"
+                type="text"
                 value={query}
                 onChange={(event) => {
                   setQuery(event.target.value)
                   setPage(1)
                 }}
                 placeholder={copy.common.search}
-                className="h-10 pr-9 pl-9"
+                className="h-10 bg-muted/50 pr-9 pl-9"
                 disabled={showLoading}
               />
               {query ? (
@@ -289,7 +289,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                     setQuery("")
                     setPage(1)
                   }}
-                  className="absolute right-2 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="absolute right-2 flex size-7 items-center justify-center rounded-md bg-muted text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   aria-label="Очистить поиск"
                 >
                   <HugeiconsIcon icon={Cancel01Icon} size={14} strokeWidth={2} />
@@ -298,7 +298,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
             </label>
             <Button
               type="button"
-              className="h-10 w-full shrink-0 px-4 sm:w-auto"
+              className="h-10 w-full shrink-0 px-4 sm:ml-auto sm:w-auto"
               onClick={openCreate}
             >
               <HugeiconsIcon icon={PlusSignIcon} size={16} strokeWidth={2} />
@@ -317,15 +317,18 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
             </div>
           ) : (
             <>
-              <Table className="min-w-[760px]">
+              <Table className="min-w-[760px] border-collapse">
                 <TableHeader>
-                  <TableRow className="bg-muted/30 hover:bg-muted/30">
+                  <TableRow className="bg-muted/40 hover:bg-muted/40">
                     {tableFields.map((field) => (
-                      <TableHead key={field.key}>
+                      <TableHead
+                        key={field.key}
+                        className="border-r border-border last:border-r-0"
+                      >
                         {field.labels[language] ?? field.labels.ru}
                       </TableHead>
                     ))}
-                    <TableHead className="w-28 text-right">
+                    <TableHead className="w-14 border-r-0 text-right">
                       {copy.common.actions}
                     </TableHead>
                   </TableRow>
@@ -342,7 +345,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                         {row.map((cell, cellIndex) => (
                           <TableCell
                             key={`${item.id}-${cellIndex}`}
-                            className="max-w-[220px] truncate"
+                            className="max-w-[220px] truncate border-r border-border last:border-r-0"
                           >
                             <span
                               className={
@@ -355,7 +358,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                             </span>
                           </TableCell>
                         ))}
-                        <TableCell className="w-14 text-right">
+                        <TableCell className="w-14 border-r-0 text-right">
                           <Popover
                             open={menuOpenId === item.id}
                             onOpenChange={(open) =>
@@ -444,22 +447,8 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                           }
                           description={
                             query
-                              ? "Попробуйте изменить запрос или очистить поиск."
+                              ? "Попробуйте изменить запрос."
                               : "Добавьте запись кнопкой сверху или заполните шаг онбординга."
-                          }
-                          action={
-                            query ? (
-                              <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => {
-                                  setQuery("")
-                                  setPage(1)
-                                }}
-                              >
-                                Очистить поиск
-                              </Button>
-                            ) : null
                           }
                         />
                       </TableCell>

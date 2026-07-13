@@ -1301,7 +1301,7 @@ export function DashboardHome() {
     <main className="min-h-full bg-background">
       <div className="w-full animate-in px-4 py-6 duration-300 fade-in sm:px-5 lg:px-6 2xl:px-8">
         <section className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="rounded-lg border border-border bg-background p-6 transition-shadow hover:shadow-sm">
+          <div className="rounded-lg border border-border bg-card p-6 transition-shadow hover:shadow-sm">
             <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
               {copy.home.eyebrow}
             </p>

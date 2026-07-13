@@ -48,39 +48,39 @@
 }
 
 :root {
-    /* Soft cool-gray canvas instead of pure white (light / sun mode). */
-    --background: oklch(0.975 0.004 220);
+    /* Cool gray light theme — avoid pure white canvas. */
+    --background: oklch(0.955 0.006 220);
     --foreground: oklch(0.148 0.004 228.8);
-    --card: oklch(0.995 0.002 220);
+    --card: oklch(0.978 0.004 220);
     --card-foreground: oklch(0.148 0.004 228.8);
-    --popover: oklch(0.995 0.002 220);
+    --popover: oklch(0.985 0.003 220);
     --popover-foreground: oklch(0.148 0.004 228.8);
     --primary: oklch(0.508 0.118 165.612);
     --primary-foreground: oklch(0.979 0.021 166.113);
-    --secondary: oklch(0.955 0.004 220);
+    --secondary: oklch(0.93 0.006 220);
     --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.945 0.005 215);
-    --muted-foreground: oklch(0.52 0.02 215);
-    --accent: oklch(0.945 0.005 215);
+    --muted: oklch(0.925 0.007 215);
+    --muted-foreground: oklch(0.5 0.02 215);
+    --accent: oklch(0.925 0.007 215);
     --accent-foreground: oklch(0.218 0.008 223.9);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.9 0.006 215);
-    --input: oklch(0.9 0.006 215);
-    --ring: oklch(0.72 0.014 214.4);
+    --border: oklch(0.875 0.008 215);
+    --input: oklch(0.875 0.008 215);
+    --ring: oklch(0.7 0.014 214.4);
     --chart-1: oklch(0.897 0.196 126.665);
     --chart-2: oklch(0.768 0.233 130.85);
     --chart-3: oklch(0.648 0.2 131.684);
     --chart-4: oklch(0.532 0.157 131.589);
     --chart-5: oklch(0.453 0.124 130.933);
     --radius: 0.625rem;
-    --sidebar: oklch(0.97 0.004 220);
+    --sidebar: oklch(0.945 0.006 220);
     --sidebar-foreground: oklch(0.148 0.004 228.8);
     --sidebar-primary: oklch(0.596 0.145 163.225);
     --sidebar-primary-foreground: oklch(0.979 0.021 166.113);
-    --sidebar-accent: oklch(0.945 0.005 215);
+    --sidebar-accent: oklch(0.925 0.007 215);
     --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
-    --sidebar-border: oklch(0.9 0.006 215);
-    --sidebar-ring: oklch(0.72 0.014 214.4);
+    --sidebar-border: oklch(0.875 0.008 215);
+    --sidebar-ring: oklch(0.7 0.014 214.4);
 }
 
 .dark {
@@ -130,4 +130,10 @@
   html {
     @apply font-sans;
     }
+  /* Hide native blue search clear — we use our own muted control. */
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }
