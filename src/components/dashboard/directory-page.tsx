@@ -7,6 +7,7 @@ import {
   ArrowRight01Icon,
   Cancel01Icon,
   Delete02Icon,
+  MoreHorizontalIcon,
   PencilEdit01Icon,
   PlusSignIcon,
   Search01Icon,
@@ -25,6 +26,11 @@ import { EmptyState } from "@/components/ui/empty-state"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -32,6 +38,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
 import {
   Table,
   TableBody,
@@ -105,6 +112,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
   )
   const [draft, setDraft] = React.useState<Record<string, string>>({})
   const [isSaving, setIsSaving] = React.useState(false)
+  const [menuOpenId, setMenuOpenId] = React.useState<string | null>(null)
 
   const formFields = React.useMemo(() => getDirectoryFormFields(kind), [kind])
   const tableFields = React.useMemo(() => getDirectoryTableFields(kind), [kind])
@@ -347,38 +355,72 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                             </span>
                           </TableCell>
                         ))}
-                        <TableCell className="text-right">
-                          <div className="inline-flex items-center justify-end gap-1">
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon-sm"
-                              onClick={() => openEdit(item)}
-                              aria-label="Редактировать"
-                              title="Редактировать"
+                        <TableCell className="w-14 text-right">
+                          <Popover
+                            open={menuOpenId === item.id}
+                            onOpenChange={(open) =>
+                              setMenuOpenId(open ? item.id : null)
+                            }
+                          >
+                            <PopoverTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-sm"
+                                className="size-8 text-muted-foreground hover:text-foreground"
+                                aria-label="Действия"
+                              >
+                                <HugeiconsIcon
+                                  icon={MoreHorizontalIcon}
+                                  size={18}
+                                  strokeWidth={2}
+                                />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              align="end"
+                              sideOffset={6}
+                              className="w-44 p-1"
                             >
-                              <HugeiconsIcon
-                                icon={PencilEdit01Icon}
-                                size={16}
-                                strokeWidth={2}
-                              />
-                            </Button>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon-sm"
-                              onClick={() => openDelete(item)}
-                              aria-label="Удалить"
-                              title="Удалить"
-                              className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-                            >
-                              <HugeiconsIcon
-                                icon={Delete02Icon}
-                                size={16}
-                                strokeWidth={2}
-                              />
-                            </Button>
-                          </div>
+                              <button
+                                type="button"
+                                className={cn(
+                                  "flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-sm transition-colors",
+                                  "hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
+                                )}
+                                onClick={() => {
+                                  setMenuOpenId(null)
+                                  openEdit(item)
+                                }}
+                              >
+                                <HugeiconsIcon
+                                  icon={PencilEdit01Icon}
+                                  size={16}
+                                  strokeWidth={2}
+                                  className="text-muted-foreground"
+                                />
+                                Редактировать
+                              </button>
+                              <button
+                                type="button"
+                                className={cn(
+                                  "flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-sm transition-colors",
+                                  "text-destructive hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline-none"
+                                )}
+                                onClick={() => {
+                                  setMenuOpenId(null)
+                                  openDelete(item)
+                                }}
+                              >
+                                <HugeiconsIcon
+                                  icon={Delete02Icon}
+                                  size={16}
+                                  strokeWidth={2}
+                                />
+                                Удалить
+                              </button>
+                            </PopoverContent>
+                          </Popover>
                         </TableCell>
                       </TableRow>
                     )
