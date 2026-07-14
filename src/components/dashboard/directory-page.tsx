@@ -261,53 +261,53 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
 
   return (
     <main className="min-h-full bg-background">
-      <div className="w-full animate-in px-4 py-6 duration-300 fade-in sm:px-5 lg:px-6 2xl:px-8">
-        <section className="overflow-hidden rounded-xl border border-border bg-card">
-          <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center sm:justify-between">
-            <label className="relative flex h-10 w-full max-w-xs shrink-0 items-center sm:max-w-[16rem]">
-              <HugeiconsIcon
-                icon={Search01Icon}
-                size={16}
-                strokeWidth={2}
-                className="pointer-events-none absolute left-3 text-muted-foreground"
-              />
-              <Input
-                type="text"
-                value={query}
-                onChange={(event) => {
-                  setQuery(event.target.value)
+      <div className="flex w-full animate-in flex-col gap-4 px-4 py-6 duration-300 fade-in sm:px-5 lg:px-6 2xl:px-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <label className="relative flex h-10 w-full max-w-xs shrink-0 items-center sm:max-w-[16rem]">
+            <HugeiconsIcon
+              icon={Search01Icon}
+              size={16}
+              strokeWidth={2}
+              className="pointer-events-none absolute left-3 text-muted-foreground"
+            />
+            <Input
+              type="text"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                setPage(1)
+              }}
+              placeholder={copy.common.search}
+              className="h-10 border-border bg-card pr-9 pl-9"
+              disabled={showLoading}
+            />
+            {query ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("")
                   setPage(1)
                 }}
-                placeholder={copy.common.search}
-                className="h-10 bg-muted/50 pr-9 pl-9"
-                disabled={showLoading}
-              />
-              {query ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setQuery("")
-                    setPage(1)
-                  }}
-                  className="absolute right-2 flex size-7 items-center justify-center rounded-md bg-muted text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  aria-label="Очистить поиск"
-                >
-                  <HugeiconsIcon icon={Cancel01Icon} size={14} strokeWidth={2} />
-                </button>
-              ) : null}
-            </label>
-            <Button
-              type="button"
-              className="h-10 w-full shrink-0 px-4 sm:ml-auto sm:w-auto"
-              onClick={openCreate}
-            >
-              <HugeiconsIcon icon={PlusSignIcon} size={16} strokeWidth={2} />
-              {pageCopy.addLabel}
-            </Button>
-          </div>
+                className="absolute right-2 flex size-7 items-center justify-center rounded-md bg-muted text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label="Очистить поиск"
+              >
+                <HugeiconsIcon icon={Cancel01Icon} size={14} strokeWidth={2} />
+              </button>
+            ) : null}
+          </label>
+          <Button
+            type="button"
+            className="h-10 w-full shrink-0 px-4 sm:ml-auto sm:w-auto"
+            onClick={openCreate}
+          >
+            <HugeiconsIcon icon={PlusSignIcon} size={16} strokeWidth={2} />
+            {pageCopy.addLabel}
+          </Button>
+        </div>
 
+        <section className="overflow-hidden rounded-xl border border-primary/15 bg-card">
           {showLoading ? (
-            <div className="space-y-3 p-4">
+            <div className="space-y-3 bg-primary/[0.02] p-4">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <Skeleton className="h-10 flex-1 rounded-lg" />
@@ -319,11 +319,11 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
             <>
               <Table className="min-w-[760px] border-collapse">
                 <TableHeader>
-                  <TableRow className="bg-muted/40 hover:bg-muted/40">
+                  <TableRow className="border-primary/10 bg-primary/[0.06] hover:bg-primary/[0.06]">
                     {tableFields.map((field) => (
                       <TableHead
                         key={field.key}
-                        className="border-r border-border last:border-r-0"
+                        className="border-r border-primary/10 last:border-r-0"
                       >
                         {field.labels[language] ?? field.labels.ru}
                       </TableHead>
@@ -333,19 +333,19 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody className="bg-primary/[0.015]">
                   {visibleItems.map((item, rowIndex) => {
                     const row = entityToRowValues(kind, item)
                     return (
                       <TableRow
                         key={item.id}
-                        className="animate-in fade-in duration-200"
+                        className="animate-in border-primary/10 duration-200 fade-in odd:bg-primary/[0.02] even:bg-transparent hover:bg-primary/[0.05]"
                         style={{ animationDelay: `${rowIndex * 30}ms` }}
                       >
                         {row.map((cell, cellIndex) => (
                           <TableCell
                             key={`${item.id}-${cellIndex}`}
-                            className="max-w-[220px] truncate border-r border-border last:border-r-0"
+                            className="max-w-[220px] truncate border-r border-primary/10 last:border-r-0"
                           >
                             <span
                               className={
@@ -370,7 +370,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                                 type="button"
                                 variant="ghost"
                                 size="icon-sm"
-                                className="size-8 text-muted-foreground hover:text-foreground"
+                                className="size-8 text-muted-foreground hover:bg-primary/10 hover:text-foreground"
                                 aria-label="Действия"
                               >
                                 <HugeiconsIcon
@@ -457,7 +457,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                 </TableBody>
               </Table>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border p-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-primary/10 bg-primary/[0.03] p-4">
                 <Select
                   value={String(pageSize)}
                   onValueChange={(value) => {
@@ -466,7 +466,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                   }}
                 >
                   <SelectTrigger
-                    className="h-10 min-w-16 gap-1.5 border-border bg-background px-2.5 shadow-none hover:bg-muted hover:text-foreground data-[size=default]:h-10 data-[size=sm]:h-10 dark:bg-background dark:hover:bg-muted"
+                    className="h-10 min-w-16 gap-1.5 border-primary/15 bg-background px-2.5 shadow-none hover:bg-primary/5 hover:text-foreground data-[size=default]:h-10 data-[size=sm]:h-10 dark:bg-background dark:hover:bg-primary/10"
                     aria-label="Количество записей на странице"
                   >
                     <SelectValue />
@@ -485,7 +485,7 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                     type="button"
                     variant="outline"
                     size="icon"
-                    className="size-10"
+                    className="size-10 border-primary/15 hover:bg-primary/5"
                     onClick={() =>
                       setPage((current) => Math.max(1, current - 1))
                     }
@@ -494,14 +494,14 @@ export function DirectoryPage({ kind }: { kind: DirectoryKind }) {
                   >
                     <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
                   </Button>
-                  <div className="flex size-10 items-center justify-center rounded-lg border border-border bg-background text-sm tabular-nums text-muted-foreground">
+                  <div className="flex size-10 items-center justify-center rounded-lg border border-primary/15 bg-background text-sm tabular-nums text-muted-foreground">
                     {currentPage}/{pageCount}
                   </div>
                   <Button
                     type="button"
                     variant="outline"
                     size="icon"
-                    className="size-10"
+                    className="size-10 border-primary/15 hover:bg-primary/5"
                     onClick={() =>
                       setPage((current) => Math.min(pageCount, current + 1))
                     }
