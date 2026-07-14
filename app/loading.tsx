@@ -1,5 +1,5 @@
-import { PageLoader } from "@/components/ui/loading-block"
+import { BrandLoader } from "@/components/ui/brand-loader"
 
 export default function RootLoading() {
-  return <PageLoader label="Загрузка..." />
+  return <BrandLoader label="Загрузка..." />
 }

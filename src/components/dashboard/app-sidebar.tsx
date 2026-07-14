@@ -33,10 +33,25 @@ import {
 import { withBasePath } from "@/lib/base-path"
 import { normalizeAppPath } from "@/lib/routing"
 import { cn } from "@/lib/utils"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { useLanguageStore } from "@/store/language-store"
+import { useTourStore } from "@/store/tour-store"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+
+function tourNavFromHref(href?: string) {
+  if (!href) return undefined
+  const match = href.match(/\/dashboard\/directories\/([^/?#]+)/)
+  return match?.[1] ? `tour-nav-${match[1]}` : undefined
+}
 
 const softSpringEasing = "cubic-bezier(0.25, 1.1, 0.4, 1)"
-const logoSrc = withBasePath("/Logo.svg?v=2")
+const logoSrc = withBasePath("/Logo.svg?v=5")
 
 const iconMap = {
   dashboard: DashboardSquare01Icon,
@@ -73,7 +88,7 @@ function isMenuHrefActive(pathname: string, href?: string) {
 function Icon({
   icon,
   size = 16,
-  className = "text-neutral-50",
+  className = "text-zinc-50",
 }: {
   icon: typeof DashboardSquare01Icon
   size?: number
@@ -98,7 +113,7 @@ function BrandBadge() {
           alt="KassaPay"
           width={221}
           height={44}
-          className="h-11 w-auto object-contain"
+          className="h-11 w-auto object-contain object-left"
           priority
         />
       </div>
@@ -109,55 +124,60 @@ function BrandBadge() {
 function SearchContainer({
   isCollapsed = false,
   placeholder,
+  value,
+  onChange,
 }: {
   isCollapsed?: boolean
   placeholder: string
+  value: string
+  onChange: (value: string) => void
 }) {
-  const [searchValue, setSearchValue] = React.useState("")
-
   return (
     <div
-      className={`relative shrink-0 transition-all duration-500 ${
+      className={cn(
+        "relative shrink-0 transition-all duration-300",
         isCollapsed ? "flex w-full justify-center" : "w-full"
-      }`}
+      )}
       style={{ transitionTimingFunction: softSpringEasing }}
     >
       <div
-        className={`relative flex h-10 items-center rounded-lg bg-black transition-all duration-500 ${
+        className={cn(
+          "relative flex h-10 items-center rounded-lg bg-zinc-900 transition-all duration-300",
           isCollapsed ? "w-10 min-w-10 justify-center" : "w-full"
-        }`}
+        )}
         style={{ transitionTimingFunction: softSpringEasing }}
       >
         <div
-          className={`flex shrink-0 items-center justify-center transition-all duration-500 ${
+          className={cn(
+            "flex shrink-0 items-center justify-center transition-all duration-300",
             isCollapsed ? "p-1" : "px-1"
-          }`}
-          style={{ transitionTimingFunction: softSpringEasing }}
+          )}
         >
-          <div className="flex size-8 items-center justify-center">
-            <Icon icon={Search01Icon} />
+          <div className="flex size-8 items-center justify-center text-zinc-400">
+            <Icon icon={Search01Icon} className="text-current" />
           </div>
         </div>
 
         <div
-          className={`relative flex-1 overflow-hidden transition-opacity duration-500 ${
+          className={cn(
+            "relative flex-1 overflow-hidden transition-opacity duration-300",
             isCollapsed ? "w-0 opacity-0" : "opacity-100"
-          }`}
-          style={{ transitionTimingFunction: softSpringEasing }}
+          )}
         >
           <input
-            type="text"
+            type="search"
             placeholder={placeholder}
-            value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
-            className="h-10 w-full border-none bg-transparent pr-2 text-[14px] leading-5 text-neutral-50 outline-none placeholder:text-neutral-400"
+            value={value}
+            onChange={(event) => onChange(event.target.value)}
+            className="h-10 w-full border-none bg-transparent pr-2 text-sm leading-5 text-zinc-50 outline-none placeholder:text-zinc-500"
             tabIndex={isCollapsed ? -1 : 0}
+            aria-label={placeholder}
           />
         </div>
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-lg border border-neutral-800"
+          className="pointer-events-none absolute inset-0 rounded-lg border border-zinc-700"
         />
       </div>
     </div>
@@ -178,14 +198,15 @@ function IconNavButton({
   return (
     <button
       type="button"
-      className={`flex size-10 min-w-10 items-center justify-center rounded-lg transition-colors duration-500 ${
+      className={cn(
+        "flex size-10 min-w-10 items-center justify-center rounded-lg transition-colors duration-200",
         isActive
-          ? "bg-neutral-800 text-neutral-50"
-          : "text-neutral-400 hover:bg-neutral-800 hover:text-neutral-300"
-      }`}
-      style={{ transitionTimingFunction: softSpringEasing }}
+          ? "bg-zinc-800 text-zinc-50"
+          : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-50"
+      )}
       onClick={onClick}
       aria-label={label}
+      aria-current={isActive ? "page" : undefined}
       title={label}
     >
       {children}
@@ -205,8 +226,7 @@ function IconNavLink({
   return (
     <Link
       href={href}
-      className="flex size-10 min-w-10 items-center justify-center rounded-lg text-neutral-400 transition-colors duration-500 hover:bg-neutral-800 hover:text-neutral-300"
-      style={{ transitionTimingFunction: softSpringEasing }}
+      className="flex size-10 min-w-10 items-center justify-center rounded-lg text-zinc-400 transition-colors duration-200 hover:bg-zinc-800 hover:text-zinc-50"
       aria-label={label}
       title={label}
     >
@@ -234,22 +254,29 @@ function IconNavigation({
   ]
 
   return (
-    <aside className="flex h-full w-16 flex-col items-center gap-2 border-r border-neutral-800 bg-black p-4">
+    <aside className="flex h-full w-14 shrink-0 flex-col items-center gap-2 border-r border-zinc-800 bg-black p-2 sm:w-16 sm:p-3">
       <div className="flex w-full flex-col items-center gap-2">
         {navItems.map((item) => (
-          <IconNavButton
+          <div
             key={item.id}
-            isActive={activeSection === item.id}
-            onClick={() => onSectionChange(item.id)}
-            label={item.label}
+            data-tour={
+              item.id === "directories" ? "tour-nav-section-directories" : undefined
+            }
+            className="rounded-lg"
           >
-            <Icon
-              icon={item.icon}
-              className={
-                activeSection === item.id ? "text-neutral-50" : "text-current"
-              }
-            />
-          </IconNavButton>
+            <IconNavButton
+              isActive={activeSection === item.id}
+              onClick={() => onSectionChange(item.id)}
+              label={item.label}
+            >
+              <Icon
+                icon={item.icon}
+                className={
+                  activeSection === item.id ? "text-zinc-50" : "text-current"
+                }
+              />
+            </IconNavButton>
+          </div>
         ))}
       </div>
 
@@ -264,7 +291,7 @@ function IconNavigation({
           <Icon
             icon={Settings02Icon}
             className={
-              activeSection === "settings" ? "text-neutral-50" : "text-current"
+              activeSection === "settings" ? "text-zinc-50" : "text-current"
             }
           />
         </IconNavButton>
@@ -279,7 +306,7 @@ function IconNavigation({
 function ChevronIcon({ expanded = false }: { expanded?: boolean }) {
   return (
     <svg
-      className="size-4 transition-transform duration-500"
+      className="size-4 transition-transform duration-300"
       style={{
         transitionTimingFunction: softSpringEasing,
         transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
@@ -302,24 +329,22 @@ function SectionTitle({
   isCollapsed,
   expandLabel,
   collapseLabel,
+  showCollapse = true,
 }: {
   title: string
   onToggleCollapse: () => void
   isCollapsed: boolean
   expandLabel: string
   collapseLabel: string
+  showCollapse?: boolean
 }) {
   if (isCollapsed) {
     return (
-      <div
-        className="flex w-full justify-center transition-all duration-500"
-        style={{ transitionTimingFunction: softSpringEasing }}
-      >
+      <div className="flex w-full justify-center">
         <button
           type="button"
           onClick={onToggleCollapse}
-          className="flex size-10 min-w-10 items-center justify-center rounded-lg text-neutral-400 transition-all duration-500 hover:bg-neutral-800 hover:text-neutral-300"
-          style={{ transitionTimingFunction: softSpringEasing }}
+          className="flex size-10 min-w-10 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-50"
           aria-label={expandLabel}
         >
           <span className="inline-block rotate-180">
@@ -331,34 +356,61 @@ function SectionTitle({
   }
 
   return (
-    <div
-      className="w-full overflow-hidden transition-all duration-500"
-      style={{ transitionTimingFunction: softSpringEasing }}
-    >
+    <div className="w-full overflow-hidden">
       <div className="flex items-center justify-between">
         <div className="flex h-10 items-center">
           <div className="px-2 py-1">
-            <div className="text-[18px] leading-[27px] font-semibold text-neutral-50">
+            <div className="text-lg leading-7 font-semibold text-zinc-50">
               {title}
             </div>
           </div>
         </div>
-        <div className="pr-1">
-          <button
-            type="button"
-            onClick={onToggleCollapse}
-            className="flex size-10 min-w-10 items-center justify-center rounded-lg text-neutral-400 transition-all duration-500 hover:bg-neutral-800 hover:text-neutral-300"
-            style={{ transitionTimingFunction: softSpringEasing }}
-            aria-label={collapseLabel}
-          >
-            <span className="-rotate-90">
-              <ChevronIcon />
-            </span>
-          </button>
-        </div>
+        {showCollapse ? (
+          <div className="pr-1">
+            <button
+              type="button"
+              onClick={onToggleCollapse}
+              className="flex size-10 min-w-10 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-50"
+              aria-label={collapseLabel}
+            >
+              <span className="-rotate-90">
+                <ChevronIcon />
+              </span>
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   )
+}
+
+function resolveMenuAction(item: DashboardMenuItemCopy): {
+  href?: string
+  action?: "open-profile"
+  disabled?: boolean
+} {
+  if (item.href) return { href: item.href }
+
+  // Map known settings labels to real actions (ru + kk).
+  const label = item.label.trim().toLowerCase()
+  if (
+    item.icon === "user" ||
+    label.includes("профиль") ||
+    label.includes("profile")
+  ) {
+    return { action: "open-profile" }
+  }
+
+  // Placeholder items without routes stay non-interactive.
+  if (
+    item.icon === "security" ||
+    item.icon === "settings" ||
+    item.icon === "check"
+  ) {
+    return { disabled: true }
+  }
+
+  return { disabled: true }
 }
 
 function MenuItemRow({
@@ -367,64 +419,100 @@ function MenuItemRow({
   onToggle,
   isCollapsed,
   isActive,
+  onNavigate,
 }: {
   item: DashboardMenuItemCopy
   isExpanded?: boolean
   onToggle?: () => void
   isCollapsed?: boolean
   isActive?: boolean
+  onNavigate?: () => void
 }) {
   const hasDropdown = Boolean(item.children?.length)
+  const resolved = resolveMenuAction(item)
+  const language = useLanguageStore((state) => state.language)
+  const soonLabel = language === "kk" ? "Жақында" : "Скоро"
+
+  const active = Boolean(isActive || item.active)
+
   const content = (
     <>
-      <div className="flex shrink-0 items-center justify-center">
-        <Icon icon={iconMap[item.icon]} />
+      <div className="flex size-8 shrink-0 items-center justify-center">
+        <Icon
+          icon={iconMap[item.icon]}
+          className={
+            resolved.disabled
+              ? "text-zinc-500"
+              : active
+                ? "text-zinc-50"
+                : "text-zinc-300"
+          }
+        />
       </div>
 
       <div
-        className={`relative flex-1 overflow-hidden transition-opacity duration-500 ${
-          isCollapsed ? "w-0 opacity-0" : "ml-3 opacity-100"
-        }`}
-        style={{ transitionTimingFunction: softSpringEasing }}
+        className={cn(
+          "relative min-w-0 flex-1 overflow-hidden transition-opacity duration-300",
+          isCollapsed ? "w-0 opacity-0" : "ml-2.5 opacity-100"
+        )}
       >
-        <div className="truncate text-left text-[14px] leading-5 text-neutral-50">
+        <div
+          className={cn(
+            "truncate text-left text-sm leading-5",
+            resolved.disabled
+              ? "text-zinc-500"
+              : active
+                ? "font-medium text-zinc-50"
+                : "text-zinc-100"
+          )}
+        >
           {item.label}
         </div>
       </div>
 
+      {resolved.disabled && !isCollapsed ? (
+        <span className="ml-2 shrink-0 rounded-md bg-zinc-800 px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-zinc-400 uppercase">
+          {soonLabel}
+        </span>
+      ) : null}
+
       {hasDropdown && (
         <div
-          className={`flex shrink-0 items-center justify-center text-neutral-50 transition-opacity duration-500 ${
-            isCollapsed ? "w-0 opacity-0" : "ml-2 opacity-100"
-          }`}
-          style={{ transitionTimingFunction: softSpringEasing }}
+          className={cn(
+            "flex shrink-0 items-center justify-center text-zinc-400 transition-opacity duration-300",
+            isCollapsed ? "w-0 opacity-0" : "ml-1.5 opacity-100"
+          )}
         >
           <ChevronIcon expanded={isExpanded} />
         </div>
       )}
     </>
   )
-  const className = `relative flex cursor-pointer items-center rounded-lg transition-all duration-500 ${
-    item.active || isActive ? "bg-neutral-800" : "hover:bg-neutral-800"
-  } ${
+
+  // Solid fill only (no ring) so highlight fits fully inside the panel padding.
+  const className = cn(
+    "relative box-border flex items-center rounded-lg transition-colors duration-200",
+    active ? "bg-zinc-800" : "hover:bg-zinc-800/80",
+    resolved.disabled && "cursor-not-allowed opacity-70 hover:bg-transparent",
     isCollapsed
-      ? "h-10 w-10 min-w-10 justify-center p-4"
-      : "h-10 w-full px-4 py-2"
-  }`
+      ? "h-10 w-10 min-w-10 justify-center"
+      : "h-10 w-full min-w-0 px-2.5"
+  )
 
   return (
     <div
-      className={`relative shrink-0 transition-all duration-500 ${
+      className={cn(
+        "relative shrink-0",
         isCollapsed ? "flex w-full justify-center" : "w-full"
-      }`}
-      style={{ transitionTimingFunction: softSpringEasing }}
+      )}
     >
-      {item.href ? (
+      {resolved.href ? (
         <Link
-          href={item.href}
+          href={resolved.href}
+          data-tour={tourNavFromHref(resolved.href)}
           className={className}
-          style={{ transitionTimingFunction: softSpringEasing }}
           title={isCollapsed ? item.label : undefined}
+          onClick={onNavigate}
         >
           {content}
         </Link>
@@ -432,30 +520,29 @@ function MenuItemRow({
         <button
           type="button"
           className={className}
-          style={{ transitionTimingFunction: softSpringEasing }}
+          title={
+            isCollapsed
+              ? item.label
+              : resolved.disabled
+                ? `${item.label} — ${soonLabel}`
+                : item.label
+          }
+          disabled={resolved.disabled && !hasDropdown}
+          aria-disabled={resolved.disabled || undefined}
           onClick={() => {
-            if (hasDropdown) onToggle?.()
+            if (hasDropdown) {
+              onToggle?.()
+              return
+            }
+            if (resolved.action === "open-profile") {
+              window.dispatchEvent(new CustomEvent("kassapay:open-profile"))
+              onNavigate?.()
+            }
           }}
-          title={isCollapsed ? item.label : undefined}
         >
           {content}
         </button>
       )}
-    </div>
-  )
-}
-
-function SubMenuItem({ label }: { label: string }) {
-  return (
-    <div className="w-full py-px pr-1 pl-9">
-      <button
-        type="button"
-        className="flex h-10 w-full cursor-pointer items-center rounded-lg px-3 py-1 text-left transition-colors hover:bg-neutral-800"
-      >
-        <span className="min-w-0 flex-1 truncate text-[14px] leading-[18px] text-neutral-300">
-          {label}
-        </span>
-      </button>
     </div>
   )
 }
@@ -466,28 +553,43 @@ function MenuSectionBlock({
   onToggleExpanded,
   isCollapsed,
   pathname,
+  query,
+  onNavigate,
 }: {
   section: DashboardMenuSectionCopy
   expandedItems: Set<string>
   onToggleExpanded: (itemKey: string) => void
   isCollapsed?: boolean
   pathname: string
+  query: string
+  onNavigate?: () => void
 }) {
+  const normalizedQuery = query.trim().toLowerCase()
+  const items = section.items.filter((item) => {
+    if (!normalizedQuery) return true
+    if (item.label.toLowerCase().includes(normalizedQuery)) return true
+    return item.children?.some((child) =>
+      child.toLowerCase().includes(normalizedQuery)
+    )
+  })
+
+  if (items.length === 0) return null
+
   return (
     <div className="flex w-full flex-col">
       <div
-        className={`relative w-full shrink-0 overflow-hidden transition-all duration-500 ${
+        className={cn(
+          "relative w-full shrink-0 overflow-hidden transition-all duration-300",
           isCollapsed ? "h-0 opacity-0" : "h-10 opacity-100"
-        }`}
-        style={{ transitionTimingFunction: softSpringEasing }}
+        )}
       >
-        <div className="flex h-10 items-center px-4">
-          <div className="text-[14px] text-neutral-400">{section.title}</div>
+        <div className="flex h-10 items-center px-3">
+          <div className="text-sm font-medium text-zinc-400">{section.title}</div>
         </div>
       </div>
 
-      {section.items.map((item, index) => {
-        const itemKey = `${section.title}-${index}`
+      {items.map((item, index) => {
+        const itemKey = `${section.title}-${index}-${item.label}`
         const isExpanded = expandedItems.has(itemKey)
 
         return (
@@ -498,11 +600,16 @@ function MenuSectionBlock({
               onToggle={() => onToggleExpanded(itemKey)}
               isCollapsed={isCollapsed}
               isActive={isMenuHrefActive(pathname, item.href)}
+              onNavigate={onNavigate}
             />
             {isExpanded && item.children && !isCollapsed && (
               <div className="mb-2 flex flex-col gap-1">
                 {item.children.map((child) => (
-                  <SubMenuItem key={`${itemKey}-${child}`} label={child} />
+                  <div key={`${itemKey}-${child}`} className="w-full py-px pr-1 pl-9">
+                    <div className="flex h-10 w-full items-center rounded-lg px-3 py-1 text-left text-sm text-zinc-400">
+                      <span className="min-w-0 flex-1 truncate">{child}</span>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
@@ -513,21 +620,24 @@ function MenuSectionBlock({
   )
 }
 
-function DetailSidebar({
+function DetailSidebarBody({
   activeSection,
   pathname,
-  isOpen,
   onClose,
+  showCollapse,
+  onNavigate,
 }: {
   activeSection: SidebarSectionId
   pathname: string
-  isOpen: boolean
   onClose: () => void
+  showCollapse: boolean
+  onNavigate?: () => void
 }) {
   const language = useLanguageStore((state) => state.language)
   const [expandedItems, setExpandedItems] = React.useState<Set<string>>(
     new Set()
   )
+  const [searchValue, setSearchValue] = React.useState("")
   const copy = getDashboardCopy(language).sidebar
   const content = copy.content[activeSection] ?? copy.content.dashboard
 
@@ -541,16 +651,7 @@ function DetailSidebar({
   }
 
   return (
-    <aside
-      className={cn(
-        "flex h-full w-80 flex-col items-start gap-4 bg-black p-4 shadow-2xl shadow-black/40 transition-all duration-300",
-        isOpen
-          ? "translate-x-0 opacity-100"
-          : "pointer-events-none -translate-x-3 opacity-0"
-      )}
-      style={{ transitionTimingFunction: softSpringEasing }}
-      aria-hidden={!isOpen}
-    >
+    <>
       <BrandBadge />
 
       <SectionTitle
@@ -559,13 +660,16 @@ function DetailSidebar({
         isCollapsed={false}
         expandLabel={copy.expand}
         collapseLabel={copy.collapse}
+        showCollapse={showCollapse}
       />
-      <SearchContainer isCollapsed={false} placeholder={copy.search} />
+      <SearchContainer
+        isCollapsed={false}
+        placeholder={copy.search}
+        value={searchValue}
+        onChange={setSearchValue}
+      />
 
-      <div
-        className="flex w-full flex-col items-start gap-4 overflow-y-auto"
-        style={{ transitionTimingFunction: softSpringEasing }}
-      >
+      <div className="flex w-full min-h-0 flex-1 flex-col items-stretch gap-3 overflow-x-hidden overflow-y-auto">
         {content.sections.map((section, index) => (
           <MenuSectionBlock
             key={`${activeSection}-${index}`}
@@ -574,10 +678,44 @@ function DetailSidebar({
             onToggleExpanded={toggleExpanded}
             isCollapsed={false}
             pathname={pathname}
+            query={searchValue}
+            onNavigate={onNavigate}
           />
         ))}
       </div>
-      <div className="mt-auto" />
+    </>
+  )
+}
+
+function DesktopDetailSidebar({
+  activeSection,
+  pathname,
+  isOpen,
+  onClose,
+}: {
+  activeSection: SidebarSectionId
+  pathname: string
+  isOpen: boolean
+  onClose: () => void
+}) {
+  return (
+    <aside
+      className={cn(
+        "flex h-full w-72 flex-col items-stretch gap-4 overflow-hidden bg-black p-3 text-zinc-50 shadow-2xl shadow-black/40 transition-all duration-200 sm:p-4 lg:w-80",
+        isOpen
+          ? "translate-x-0 opacity-100"
+          : "pointer-events-none -translate-x-3 opacity-0"
+      )}
+      style={{ transitionTimingFunction: softSpringEasing }}
+      aria-hidden={!isOpen}
+    >
+      <DetailSidebarBody
+        activeSection={activeSection}
+        pathname={pathname}
+        onClose={onClose}
+        showCollapse
+        onNavigate={onClose}
+      />
     </aside>
   )
 }
@@ -592,54 +730,108 @@ export function AppSidebar() {
   const pathname = usePathname()
   const normalizedPathname = stripLocalePrefix(pathname)
   const routeSection = getRouteSection(normalizedPathname)
+  const isMobile = useIsMobile()
+  const language = useLanguageStore((state) => state.language)
+  const copy = getDashboardCopy(language).sidebar
 
   // Manual section only for icon-rail switches that don't change the URL.
-  // When the route changes, drop the override and follow the URL.
   const [manualSection, setManualSection] =
     React.useState<SidebarSectionId | null>(null)
-  const [detailOpen, setDetailOpen] = React.useState(true)
+  const [detailOpen, setDetailOpen] = React.useState(false)
+  const [pathSnapshot, setPathSnapshot] = React.useState(normalizedPathname)
 
+  // Close detail panel on route change (effect — avoids render-phase setState thrash).
   React.useEffect(() => {
+    if (pathSnapshot === normalizedPathname) return
+    setPathSnapshot(normalizedPathname)
     setManualSection(null)
-  }, [normalizedPathname])
+    setDetailOpen(false)
+  }, [normalizedPathname, pathSnapshot])
 
-  // Opening a top-level section always expands the detail panel.
+  // Tour / external request: open a section panel (e.g. directories after stage save).
+  React.useEffect(() => {
+    function onOpenSidebar(event: Event) {
+      const detail = (event as CustomEvent<{ section?: SidebarSectionId }>).detail
+      const section = detail?.section
+      if (!section) return
+      setManualSection(section)
+      setDetailOpen(true)
+    }
+    window.addEventListener("kassapay:open-sidebar", onOpenSidebar)
+    return () => window.removeEventListener("kassapay:open-sidebar", onOpenSidebar)
+  }, [])
+
   function handleSectionChange(section: SidebarSectionId) {
     setManualSection(section)
     setDetailOpen(true)
+    if (section === "directories") {
+      const tour = useTourStore.getState()
+      if (tour.uiMode === "navigate" && tour.navigatePhase === "section") {
+        window.setTimeout(() => tour.setNavigatePhase("item"), 160)
+      }
+    }
   }
 
   const activeSection = manualSection ?? routeSection
 
   return (
     <>
-      <div className="relative z-50 flex h-full w-16 shrink-0">
+      <div className="relative z-50 flex h-full w-14 shrink-0 sm:w-16">
         <IconNavigation
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
         />
-        <div
-          className={cn(
-            "absolute top-0 left-16 z-50 h-full",
-            !detailOpen && "pointer-events-none"
-          )}
-        >
-          <DetailSidebar
-            activeSection={activeSection}
-            pathname={normalizedPathname}
-            isOpen={detailOpen}
-            onClose={() => setDetailOpen(false)}
-          />
-        </div>
+
+        {!isMobile ? (
+          <div
+            className={cn(
+              "absolute top-0 left-14 z-50 h-full sm:left-16",
+              !detailOpen && "pointer-events-none"
+            )}
+          >
+            <DesktopDetailSidebar
+              key={activeSection}
+              activeSection={activeSection}
+              pathname={normalizedPathname}
+              isOpen={detailOpen}
+              onClose={() => setDetailOpen(false)}
+            />
+          </div>
+        ) : null}
       </div>
 
-      {detailOpen ? (
+      {!isMobile && detailOpen ? (
         <button
           type="button"
-          aria-label="Close menu"
-          className="fixed inset-0 left-16 z-40 bg-background/45 backdrop-blur-sm transition-opacity"
+          aria-label={copy.collapse}
+          className="fixed inset-0 left-14 z-40 bg-background/50 backdrop-blur-sm transition-opacity sm:left-16"
           onClick={() => setDetailOpen(false)}
         />
+      ) : null}
+
+      {isMobile ? (
+        <Sheet open={detailOpen} onOpenChange={setDetailOpen}>
+          <SheetContent
+            side="left"
+            showCloseButton
+            className="w-[min(100vw-2.5rem,20rem)] border-zinc-800 bg-black p-4 text-zinc-50 sm:max-w-sm"
+          >
+            <SheetHeader className="sr-only">
+              <SheetTitle>{copy.content[activeSection]?.title ?? copy.nav.dashboard}</SheetTitle>
+              <SheetDescription>{copy.search}</SheetDescription>
+            </SheetHeader>
+            <div className="flex h-full flex-col gap-4 pt-2">
+              <DetailSidebarBody
+                key={activeSection}
+                activeSection={activeSection}
+                pathname={normalizedPathname}
+                onClose={() => setDetailOpen(false)}
+                showCollapse={false}
+                onNavigate={() => setDetailOpen(false)}
+              />
+            </div>
+          </SheetContent>
+        </Sheet>
       ) : null}
     </>
   )

@@ -256,7 +256,24 @@ export interface DashboardCopy {
       next: string
       actions: string
       edit: string
+      delete: string
+      cancel: string
+      save: string
       empty: string
+      emptyTitle: string
+      emptyDescription: string
+      emptySearchHint: string
+      clearSearch: string
+      pageSize: string
+      added: string
+      saved: string
+      deleted: string
+      editTitle: string
+      createDescription: string
+      editDescription: string
+      deleteTitle: string
+      deleteDescription: string
+      deleteDescriptionNamed: string
     }
     pages: Record<
       DirectoryKind,

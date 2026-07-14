@@ -77,7 +77,7 @@ const RegisterHeroPanel = memo(function RegisterHeroPanel() {
         <div className="flex w-full max-w-lg flex-col items-center gap-4 animate-in duration-500 fade-in slide-in-from-top-3">
           <div className="inline-flex h-12 items-center rounded-2xl border border-white/10 bg-white/10 px-4 backdrop-blur-xl">
             <Image
-              src={withBasePath("/Logo.svg")}
+              src={withBasePath("/Logo.svg?v=5")}
               alt="KassaPay"
               width={150}
               height={34}
@@ -165,6 +165,16 @@ export default function RegisterPage() {
       <div className="grid h-full w-full grid-cols-1 md:grid-cols-2">
         <section className="flex min-h-0 items-center justify-center overflow-y-auto px-6 py-10 md:px-12">
           <div className="w-full max-w-md space-y-6">
+            <div className="md:hidden">
+              <Image
+                src={withBasePath("/Logo.svg?v=5")}
+                alt="KassaPay"
+                width={150}
+                height={34}
+                className="h-8 w-auto object-contain"
+                priority
+              />
+            </div>
             {meta.title || meta.description ? (
               <div className="animate-in space-y-2 duration-300 fade-in slide-in-from-top-3">
                 {meta.title ? (

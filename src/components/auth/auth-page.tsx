@@ -13,20 +13,14 @@ import {
 } from "@/components/ui/input-otp"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  getFirstIncompleteStep,
-  seedOnboardingFromRegister,
-} from "@/lib/onboarding-sync"
-import {
-  isOnboardingComplete,
-  useOnboardingStore,
-} from "@/store/onboarding-store"
+import { seedOnboardingFromRegister } from "@/lib/onboarding-sync"
+import { isTourComplete, useTourStore } from "@/store/tour-store"
 import { withBasePath } from "@/lib/base-path"
 import { navigateHard } from "@/lib/routing"
 import { toast } from "@/store/toast-store"
 
 const FieldShell = ({ children }: { children: ReactNode }) => (
-  <div className="group rounded-2xl border border-border bg-foreground/[0.035] transition-all duration-200 focus-within:border-primary/70 focus-within:bg-primary/[0.055] focus-within:shadow-[0_0_0_4px_color-mix(in_oklch,var(--primary),transparent_86%)]">
+  <div className="group rounded-2xl border border-border bg-foreground/[0.035] transition-all duration-200 focus-within:border-primary focus-within:bg-primary/[0.055] focus-within:shadow-[0_0_0_3px_color-mix(in_oklch,var(--primary),transparent_75%)]">
     {children}
   </div>
 )
@@ -220,18 +214,19 @@ export function AuthPage() {
     }
 
     seedOnboardingFromRegister(data)
-    const completed = useOnboardingStore.getState().completedStepIds
-    if (!isOnboardingComplete(completed)) {
-      useOnboardingStore
-        .getState()
-        .setCurrentStep(getFirstIncompleteStep(completed))
+    const tour = useTourStore.getState()
+    const completed = tour.completedStages
+    const tourDone = isTourComplete(completed)
+    // First paid login: show welcome tour on dashboard.
+    if (!tourDone && !tour.welcomeSeen) {
+      tour.openWelcome()
     }
 
     toast({
       title: "Добро пожаловать",
-      description: isOnboardingComplete(completed)
+      description: tourDone
         ? "Вы успешно вошли в систему."
-        : "Завершите онбординг, чтобы запустить продажи.",
+        : "Пройдите обучение — подсказки появятся прямо в интерфейсе.",
       variant: "success",
     })
     setStep(0)
@@ -244,6 +239,16 @@ export function AuthPage() {
         <section className="flex min-h-0 items-center justify-center px-6 py-10 md:px-12">
           <div className="w-full max-w-md space-y-6">
             <div className="animate-in space-y-2.5 duration-300 fade-in slide-in-from-top-3">
+              <div className="mb-4 md:hidden">
+                <Image
+                  src={withBasePath("/Logo.svg?v=5")}
+                  alt="KassaPay"
+                  width={150}
+                  height={34}
+                  className="h-8 w-auto object-contain"
+                  priority
+                />
+              </div>
               <h1 className="text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
                 <span className="font-light">
                   {isRegister ? "Создать аккаунт" : "Добро пожаловать"}
@@ -532,8 +537,15 @@ export function AuthPage() {
 
           <div className="relative z-10 flex h-full min-h-0 flex-col items-center justify-center gap-6 overflow-hidden rounded-3xl px-5 py-7 text-center text-white sm:gap-8 sm:px-8 lg:px-10">
             <div className="flex w-full max-w-lg flex-col items-center gap-4 animate-in duration-500 fade-in slide-in-from-top-3">
-              <div className="inline-flex rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-medium tracking-[0.22em] text-white/70 uppercase backdrop-blur-xl">
-                KassaPay
+              <div className="inline-flex h-12 items-center rounded-2xl border border-white/10 bg-white/10 px-4 backdrop-blur-xl">
+                <Image
+                  src={withBasePath("/Logo.svg?v=5")}
+                  alt="KassaPay"
+                  width={150}
+                  height={34}
+                  className="h-7 w-auto object-contain"
+                  priority
+                />
               </div>
 
               <h2 className="text-balance text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">

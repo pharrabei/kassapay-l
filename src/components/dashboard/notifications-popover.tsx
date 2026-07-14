@@ -227,7 +227,7 @@ export function NotificationsPopover({
                     <button
                       type="button"
                       onClick={() => remove(item.id)}
-                      className="absolute top-2.5 right-2 flex size-7 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity hover:bg-muted hover:text-foreground group-hover:opacity-100 focus-visible:opacity-100"
+                      className="absolute top-2.5 right-2 flex size-9 items-center justify-center rounded-md text-muted-foreground opacity-100 transition-opacity hover:bg-muted hover:text-foreground sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
                       aria-label={copy.notificationsPanel.remove}
                       title={copy.notificationsPanel.remove}
                     >

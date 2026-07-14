@@ -8,7 +8,6 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import {
   Home03Icon,
   Moon01Icon,
-  Search01Icon,
   Sun01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons"
@@ -165,15 +164,29 @@ export function DashboardHeader() {
   const breadcrumbs = getBreadcrumbItems(pathname, copy)
   const dashboardPath = getDashboardPath(pathname)
 
+  // Sync document language for a11y/SEO with in-app language toggle.
+  React.useEffect(() => {
+    document.documentElement.lang = language
+  }, [language])
+
+  // Sidebar "Профиль" and other callers open the same dialog.
+  React.useEffect(() => {
+    function onOpenProfile() {
+      setProfileOpen(true)
+    }
+    window.addEventListener("kassapay:open-profile", onOpenProfile)
+    return () => window.removeEventListener("kassapay:open-profile", onOpenProfile)
+  }, [])
+
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-border bg-background px-6">
-        <nav aria-label="Breadcrumb" className="min-w-0">
-          <ol className="flex min-w-0 items-center gap-2 text-sm">
+      <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-border bg-background px-3 sm:h-16 sm:px-6">
+        <nav aria-label="Breadcrumb" className="min-w-0 flex-1">
+          <ol className="flex min-w-0 items-center gap-1.5 text-sm sm:gap-2">
             <li className="flex min-w-0 items-center">
               <Link
                 href={dashboardPath}
-                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="flex size-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 aria-label={copy.header.dashboard}
                 title={copy.header.dashboard}
               >
@@ -215,21 +228,7 @@ export function DashboardHeader() {
           </ol>
         </nav>
 
-        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <label className="relative hidden h-10 w-72 items-center md:flex">
-            <HugeiconsIcon
-              icon={Search01Icon}
-              size={16}
-              strokeWidth={2}
-              className="pointer-events-none absolute left-3 text-muted-foreground"
-            />
-            <input
-              type="search"
-              placeholder={copy.header.search}
-              className="h-full w-full rounded-lg border border-border bg-muted/40 pr-3 pl-9 text-sm text-foreground transition-colors outline-none placeholder:text-muted-foreground focus:border-primary/50 focus:bg-background focus:ring-3 focus:ring-ring/40"
-            />
-          </label>
-
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <LanguageToggle
             language={language}
             setLanguage={setLanguage}
@@ -247,7 +246,7 @@ export function DashboardHeader() {
 
           <button
             type="button"
-            className="flex size-10 items-center justify-center overflow-hidden rounded-lg bg-muted text-foreground transition-colors hover:bg-muted/80 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 outline-none"
+            className="flex size-10 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted text-foreground transition-colors hover:bg-muted/80 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 outline-none"
             aria-label={copy.header.editProfile}
             title={copy.header.editProfile}
             onClick={() => setProfileOpen(true)}

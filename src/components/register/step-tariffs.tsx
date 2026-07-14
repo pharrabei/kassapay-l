@@ -140,10 +140,15 @@ export function StepTariffs() {
       <div className="min-h-[100dvh] px-5 py-5 md:px-8 md:py-7">
         <div className="mx-auto flex w-full max-w-7xl items-start justify-between gap-4">
           <div className="space-y-4">
-            <div className="space-y-1">
-              <p className="text-xs font-medium tracking-[0.2em] text-primary uppercase">
-                KassaPay
-              </p>
+            <div className="space-y-3">
+              <Image
+                src={withBasePath("/Logo.svg?v=5")}
+                alt="KassaPay"
+                width={150}
+                height={34}
+                className="h-8 w-auto object-contain"
+                priority
+              />
               <h2
                 id="tariffs-title"
                 className="text-3xl font-semibold tracking-tight text-foreground md:text-5xl"
@@ -196,7 +201,7 @@ export function StepTariffs() {
             return (
               <article
                 key={plan.id}
-                className={`relative flex min-h-[560px] animate-in flex-col rounded-3xl border p-6 shadow-sm transition-all duration-300 fade-in slide-in-from-bottom-4 hover:-translate-y-1 hover:shadow-xl ${
+                className={`relative flex min-h-0 animate-in flex-col rounded-3xl border p-6 shadow-sm transition-all duration-300 fade-in slide-in-from-bottom-4 hover:-translate-y-0.5 hover:shadow-xl md:min-h-[520px] ${
                   plan.highlighted
                     ? "border-primary/60 bg-primary/[0.07] shadow-primary/10"
                     : "border-border bg-card"

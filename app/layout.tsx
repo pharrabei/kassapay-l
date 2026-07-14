@@ -1,15 +1,21 @@
 import { Geist_Mono, Montserrat } from "next/font/google"
 
 import "./globals.css"
+import { NavigationLoader } from "@/components/navigation-loader"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils"
 
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" })
+const montserrat = Montserrat({
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  variable: "--font-sans",
+  display: "swap",
+})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
 })
 
 export default function RootLayout({
@@ -19,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ru"
       suppressHydrationWarning
       className={cn(
         "font-sans antialiased",
@@ -30,6 +36,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           {children}
+          <NavigationLoader />
           <Toaster />
         </ThemeProvider>
       </body>

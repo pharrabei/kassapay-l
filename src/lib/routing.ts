@@ -24,6 +24,7 @@ export function getDashboardPath(pathname: string): string {
 /**
  * Hard navigation with basePath + trailing slash.
  * Soft client transitions are unreliable for Next static export on GitHub Pages.
+ * Shows branded navigation spinner before leaving the page.
  */
 export function navigateHard(path: string) {
   const normalized = path.startsWith("/") ? path : `/${path}`
@@ -32,6 +33,7 @@ export function navigateHard(path: string) {
       ? `${normalized}/`
       : normalized
   if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("kassapay:navigation-start"))
     window.location.assign(withBasePath(withSlash))
   }
 }

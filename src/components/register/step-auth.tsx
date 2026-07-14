@@ -4,15 +4,9 @@ import React, { type ReactNode, useEffect, useMemo, useState } from "react"
 import { usePathname } from "next/navigation"
 import { useRegisterStore } from "@/store/register-store"
 import { getDashboardPath, navigateHard } from "@/lib/routing"
-import {
-  getFirstIncompleteStep,
-  seedOnboardingFromRegister,
-} from "@/lib/onboarding-sync"
+import { seedOnboardingFromRegister } from "@/lib/onboarding-sync"
 import { Button } from "@/components/ui/button"
-import {
-  isOnboardingComplete,
-  useOnboardingStore,
-} from "@/store/onboarding-store"
+import { isTourComplete, useTourStore } from "@/store/tour-store"
 import { toast } from "@/store/toast-store"
 import { Input } from "@/components/ui/input"
 import {
@@ -50,7 +44,7 @@ const EyeIcon = ({ open }: { open: boolean }) => (
 )
 
 const FieldShell = ({ children }: { children: ReactNode }) => (
-  <div className="group rounded-2xl border border-border bg-foreground/[0.035] transition-all duration-200 focus-within:border-primary/70 focus-within:bg-primary/[0.055] focus-within:shadow-[0_0_0_4px_color-mix(in_oklch,var(--primary),transparent_86%)]">
+  <div className="group rounded-2xl border border-border bg-foreground/[0.035] transition-all duration-200 focus-within:border-primary focus-within:bg-primary/[0.055] focus-within:shadow-[0_0_0_3px_color-mix(in_oklch,var(--primary),transparent_75%)]">
     {children}
   </div>
 )
@@ -250,18 +244,18 @@ export function StepAuth() {
     }
 
     seedOnboardingFromRegister(data)
-    const completed = useOnboardingStore.getState().completedStepIds
-    if (!isOnboardingComplete(completed)) {
-      useOnboardingStore
-        .getState()
-        .setCurrentStep(getFirstIncompleteStep(completed))
+    const tour = useTourStore.getState()
+    const completed = tour.completedStages
+    const tourDone = isTourComplete(completed)
+    if (!tourDone && !tour.welcomeSeen) {
+      tour.openWelcome()
     }
 
     toast({
       title: "Добро пожаловать",
-      description: isOnboardingComplete(completed)
+      description: tourDone
         ? "Вы успешно вошли в систему."
-        : "Завершите онбординг, чтобы запустить продажи.",
+        : "Пройдите обучение — подсказки появятся прямо в интерфейсе.",
       variant: "success",
     })
     // Full page load — static export on GitHub Pages is flaky with soft nav.
