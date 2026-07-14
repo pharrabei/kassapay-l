@@ -3,11 +3,13 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
-  BellIcon,
   Home03Icon,
+  Moon01Icon,
   Search01Icon,
+  Sun01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons"
 import { getDashboardCopy, type DirectoryKind } from "@/lib/dashboard-i18n"
@@ -19,6 +21,8 @@ import {
 import { useLanguageStore, type AppLanguage } from "@/store/language-store"
 import { useProfileStore } from "@/store/profile-store"
 import { ProfileDialog } from "@/components/dashboard/profile-dialog"
+import { NotificationsPopover } from "@/components/dashboard/notifications-popover"
+import { cn } from "@/lib/utils"
 
 interface BreadcrumbItem {
   label: string
@@ -27,6 +31,9 @@ interface BreadcrumbItem {
 
 const directoryPathPattern =
   /^\/dashboard\/directories\/(contractors|objects|events|service-categories|services|sessions)$/
+
+const headerIconButtonClass =
+  "relative flex size-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 outline-none"
 
 function stripLocalePrefix(pathname: string) {
   return normalizeAppPath(
@@ -81,7 +88,7 @@ function getBreadcrumbItems(
   return items
 }
 
-function LanguageSwitch({
+function LanguageToggle({
   language,
   setLanguage,
   label,
@@ -92,30 +99,59 @@ function LanguageSwitch({
   label: string
   languages: Record<AppLanguage, string>
 }) {
+  const nextLanguage: AppLanguage = language === "ru" ? "kk" : "ru"
+
   return (
-    <div
-      className="flex h-10 items-center rounded-lg border border-border bg-muted/40 p-1"
-      aria-label={label}
+    <button
+      type="button"
+      onClick={() => setLanguage(nextLanguage)}
+      className={cn(headerIconButtonClass, "min-w-10 px-2 text-xs font-semibold")}
+      aria-label={`${label}: ${languages[language]}. ${languages[nextLanguage]}`}
+      title={`${label}: ${languages[nextLanguage]}`}
     >
-      {[
-        { value: "kk", label: languages.kk },
-        { value: "ru", label: languages.ru },
-      ].map((item) => (
-        <button
-          key={item.value}
-          type="button"
-          onClick={() => setLanguage(item.value as AppLanguage)}
-          className={`h-8 rounded-md px-3 text-xs font-semibold transition-colors ${
-            language === item.value
-              ? "bg-background text-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-          aria-pressed={language === item.value}
-        >
-          {item.label}
-        </button>
-      ))}
-    </div>
+      {languages[language]}
+    </button>
+  )
+}
+
+function ThemeToggle({
+  label,
+  lightLabel,
+  darkLabel,
+}: {
+  label: string
+  lightLabel: string
+  darkLabel: string
+}) {
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = mounted && resolvedTheme === "dark"
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className={headerIconButtonClass}
+      aria-label={isDark ? lightLabel : darkLabel}
+      title={isDark ? lightLabel : darkLabel}
+      disabled={!mounted}
+    >
+      {mounted ? (
+        <HugeiconsIcon
+          icon={isDark ? Sun01Icon : Moon01Icon}
+          size={17}
+          strokeWidth={2}
+        />
+      ) : (
+        <span className="size-4" aria-hidden="true" />
+      )}
+      <span className="sr-only">{label}</span>
+    </button>
   )
 }
 
@@ -179,7 +215,7 @@ export function DashboardHeader() {
           </ol>
         </nav>
 
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <label className="relative hidden h-10 w-72 items-center md:flex">
             <HugeiconsIcon
               icon={Search01Icon}
@@ -194,22 +230,20 @@ export function DashboardHeader() {
             />
           </label>
 
-          <LanguageSwitch
+          <LanguageToggle
             language={language}
             setLanguage={setLanguage}
             label={copy.header.language}
             languages={copy.header.languages}
           />
 
-          <button
-            type="button"
-            className="relative flex size-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 outline-none"
-            aria-label={copy.header.notifications}
-            title={copy.header.notifications}
-          >
-            <HugeiconsIcon icon={BellIcon} size={17} strokeWidth={2} />
-            <span className="absolute top-2 right-2 size-1.5 rounded-full bg-primary" />
-          </button>
+          <ThemeToggle
+            label={copy.header.theme}
+            lightLabel={copy.header.themeLight}
+            darkLabel={copy.header.themeDark}
+          />
+
+          <NotificationsPopover language={language} copy={copy.header} />
 
           <button
             type="button"

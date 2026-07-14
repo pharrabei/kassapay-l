@@ -170,23 +170,70 @@ export interface DashboardCopy {
     notifications: string
     profile: string
     language: string
+    theme: string
+    themeLight: string
+    themeDark: string
     editProfile: string
     languages: Record<AppLanguage, string>
+    notificationsPanel: {
+      title: string
+      unread: string
+      allRead: string
+      markAllRead: string
+      emptyTitle: string
+      emptyDescription: string
+      remove: string
+      justNow: string
+      minutesAgo: string
+      hoursAgo: string
+      daysAgo: string
+    }
   }
   profile: {
     title: string
     description: string
+    editTitle: string
+    editDescription: string
     defaultFullName: string
     defaultPosition: string
     photo: string
     uploadPhoto: string
+    changePhoto: string
+    removePhoto: string
+    photoLoading: string
     fullName: string
     position: string
     phone: string
     email: string
     organization: string
+    personalSection: string
+    contactsSection: string
+    emptyValue: string
+    edit: string
+    close: string
     cancel: string
     save: string
+    saving: string
+    savedTitle: string
+    savedDescription: string
+    unsavedTitle: string
+    unsavedDescription: string
+    keepEditing: string
+    discard: string
+    discardAndClose: string
+    placeholders: {
+      fullName: string
+      position: string
+      organization: string
+      phone: string
+      email: string
+    }
+    errors: {
+      required: string
+      invalidEmail: string
+      invalidPhone: string
+      invalidPhoto: string
+    }
   }
   sidebar: {
     search: string
